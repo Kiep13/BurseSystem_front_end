@@ -1,0 +1,97 @@
+@keyframes ldio-15cru9hv1pe {
+  0% { transform: rotate(0) }
+  100% { transform: rotate(360deg) }
+}
+.ldio-15cru9hv1pe div { box-sizing: border-box!important }
+.ldio-15cru9hv1pe > div {
+  position: absolute;
+  width: 164px;
+  height: 164px;
+  top: 18px;
+  left: 18px;
+  border-radius: 50%;
+  border: 4px solid #000;
+  border-color: #262323 transparent #262323 transparent;
+  animation: ldio-15cru9hv1pe 1s linear infinite;
+}
+
+.ldio-15cru9hv1pe > div:nth-child(2), .ldio-15cru9hv1pe > div:nth-child(4) {
+  width: 152px;
+  height: 152px;
+  top: 24px;
+  left: 24px;
+  animation: ldio-15cru9hv1pe 1s linear infinite reverse;
+}
+.ldio-15cru9hv1pe > div:nth-child(2) {
+  border-color: transparent #534d4d transparent #534d4d
+}
+.ldio-15cru9hv1pe > div:nth-child(3) { border-color: transparent }
+.ldio-15cru9hv1pe > div:nth-child(3) div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: rotate(45deg);
+}
+.ldio-15cru9hv1pe > div:nth-child(3) div:before, .ldio-15cru9hv1pe > div:nth-child(3) div:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  top: -4px;
+  left: 76px;
+  background: #262323;
+  border-radius: 50%;
+  box-shadow: 0 160px 0 0 #262323;
+}
+.ldio-15cru9hv1pe > div:nth-child(3) div:after {
+  left: -4px;
+  top: 76px;
+  box-shadow: 160px 0 0 0 #262323;
+}
+
+.ldio-15cru9hv1pe > div:nth-child(4) { border-color: transparent; }
+.ldio-15cru9hv1pe > div:nth-child(4) div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: rotate(45deg);
+}
+.ldio-15cru9hv1pe > div:nth-child(4) div:before, .ldio-15cru9hv1pe > div:nth-child(4) div:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  top: -4px;
+  left: 70px;
+  background: #534d4d;
+  border-radius: 50%;
+  box-shadow: 0 148px 0 0 #534d4d;
+}
+.ldio-15cru9hv1pe > div:nth-child(4) div:after {
+  left: -4px;
+  top: 70px;
+  box-shadow: 148px 0 0 0 #534d4d;
+}
+.loadingio-spinner-double-ring-otkv1eirgl {
+  width: 200px;
+  height: 200px;
+  display: inline-block;
+  overflow: hidden;
+  background: none;
+}
+.ldio-15cru9hv1pe {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above */
+}
+.ldio-15cru9hv1pe div { box-sizing: content-box; }
+
+.spinner {
+  margin: auto;
+  width: 200px;
+}

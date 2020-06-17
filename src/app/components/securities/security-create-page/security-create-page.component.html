@@ -1,0 +1,174 @@
+<div class="create-form mb-3">
+  <button class="btn btn-outline-secondary" [routerLink]="['', 'securities']">🡠 Back to securities</button>
+</div>
+
+
+<div class="card create-form">
+  <h2 class="ml-3 mt-3">Creating a security record</h2>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+
+
+    <div class="row ml-3 mr-3">
+
+      <div class="form-group col-md">
+        <label for="name">Name</label>
+        <input id="name" type="text" name="name" class="form-control" formControlName="name">
+        <div class="validation" *ngIf="form.get('name').touched && form.get('name').invalid">
+          <small *ngIf="form.get('name').errors.required">Name field can not me empty.</small>
+          <small *ngIf="form.get('name').errors.invalidSecName">Invalid security name.</small>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="shortname">Short name</label>
+        <input id="shortname" type="text" name="shortname" class="form-control" formControlName="shortName">
+        <div class="validation" *ngIf="form.get('shortName').touched && form.get('shortName').invalid">
+          <small *ngIf="form.get('shortName').errors.required">Short name field can not me empty.</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row ml-3 mr-3">
+
+      <div class="form-group col-md">
+        <label for="regNumber">Registration number</label>
+        <input id="regNumber" type="text" name="regNumber" class="form-control" formControlName="regNumber">
+        <div class="validation" *ngIf="form.get('regNumber').touched && form.get('regNumber').invalid">
+          <small *ngIf="form.get('regNumber').errors.required">Registration number field can not me empty.</small>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="secid">Secid code</label>
+        <input id="secid" type="text" name="secid" class="form-control" formControlName="secid">
+        <div class="validation" *ngIf="form.get('secid').touched && form.get('secid').invalid">
+          <small *ngIf="form.get('secid').errors.required">Secid field can not me empty.</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row ml-3 mr-3">
+
+      <div class="form-group col-md">
+        <label for="isIn">Identification code</label>
+        <input id="isIn" type="text" name="isIn" class="form-control" formControlName="isIn">
+        <div class="validation" *ngIf="form.get('isIn').touched && form.get('isIn').invalid">
+          <small *ngIf="form.get('isIn').errors.required">ISIN field can not me empty.</small>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="gosReg">Goverment registration</label>
+        <input id="gosReg" type="text" name="gosReg" class="form-control" formControlName="gosReg">
+        <div class="validation" *ngIf="form.get('gosReg').touched && form.get('gosReg').invalid">
+          <small *ngIf="form.get('gosReg').errors.required">Goverment registration can not me empty.</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row ml-3 mr-3">
+
+      <div class="form-group col-md">
+        <label for="emitentId">Emitent id</label>
+        <input id="emitentId" type="number" name="emitentId" class="form-control" formControlName="emitentId">
+        <div class="validation" *ngIf="form.get('emitentId').touched && form.get('emitentId').invalid">
+          <small *ngIf="form.get('emitentId').errors.required">Emitent id field can not me empty.</small>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="emitentTitle">Emitent title</label>
+        <input id="emitentTitle" type="text" name="emitentTitle" class="form-control" formControlName="emitentTitle">
+        <div class="validation" *ngIf="form.get('emitentTitle').touched && form.get('emitentTitle').invalid">
+          <small *ngIf="form.get('emitentTitle').errors.required">Emitent title can not me empty.</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row ml-3 mr-3">
+
+      <div class="form-group col-md">
+        <label for="emitentInn">Emitent inn</label>
+        <input id="emitentInn" type="text" name="emitentInn" class="form-control" formControlName="emitentInn">
+        <div class="validation" *ngIf="form.get('emitentInn').touched && form.get('emitentInn').invalid">
+          <small *ngIf="form.get('emitentInn').errors.required">Emitent inn field can not me empty.</small>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="emitentOkpo">Emitent okpo</label>
+        <input id="emitentOkpo" type="text" name="emitentOkpo" class="form-control" formControlName="emitentOkpo">
+        <div class="validation" *ngIf="form.get('emitentOkpo').touched && form.get('emitentOkpo').invalid">
+          <small *ngIf="form.get('emitentOkpo').errors.required">Emitent okpo can not me empty.</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row ml-3 mr-3">
+
+      <div class="form-group col-md">
+        <label for="type">Type</label>
+        <input id="type" type="text" name="type" class="form-control" formControlName="type">
+        <div class="validation" *ngIf="form.get('type').touched && form.get('type').invalid">
+          <small *ngIf="form.get('type').errors.required">Type field can not me empty.</small>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="group_">Group</label>
+        <input id="group_" type="text" name="group_" class="form-control" formControlName="group_">
+        <div class="validation" *ngIf="form.get('group_').touched && form.get('group_').invalid">
+          <small *ngIf="form.get('group_').errors.required">Group field can not me empty.</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row ml-3 mr-3">
+
+      <div class="form-group col-md">
+        <label for="primaryBoarDid">Primary code</label>
+        <input id="primaryBoarDid" type="text" name="primaryBoarDid" class="form-control" formControlName="primaryBoarDid">
+        <div class="validation" *ngIf="form.get('primaryBoarDid').touched && form.get('primaryBoarDid').invalid">
+          <small *ngIf="form.get('primaryBoarDid').errors.required">Primary code can not me empty.</small>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="marketPriceBoarDid">Market price code</label>
+        <input id="marketPriceBoarDid" type="text" name="marketPriceBoarDid" class="form-control" formControlName="marketPriceBoarDid">
+        <div class="validation" *ngIf="form.get('marketPriceBoarDid').touched && form.get('marketPriceBoarDid').invalid">
+          <small *ngIf="form.get('marketPriceBoarDid').errors.required">Market price code can not me empty.</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row ml-3 mr-3">
+
+
+    </div>
+
+    <div>
+      <div class="float-left ml-4">
+        <div class="ml-2">
+          <div class="form-check">
+            <input id="isTraded" type="checkbox" name="isTraded" class="form-check-input" formControlName="isTraded">
+            <label for="isTraded" class="form-check-label">Is traded</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="mr-4 float-right">
+        <button type="submit" class="btn btn-success mb-3 mr-2" [disabled]="form.invalid || submitted">Save</button>
+      </div>
+    </div>
+
+
+  </form>
+</div>

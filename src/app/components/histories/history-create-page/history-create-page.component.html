@@ -1,0 +1,229 @@
+<div class="create-form mb-3">
+  <button class="btn btn-outline-secondary" [routerLink]="['', 'histories']">🡠 Back to histories</button>
+</div>
+
+
+<div class="card create-form">
+  <h2 class="ml-3 mt-3">Creating a history record</h2>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+
+    <div class="row ml-3 mr-3">
+
+      <div class="form-group col-md">
+        <label for="boardid">Code of the trading mode</label>
+        <input id="boardid" type="text" name="boardid" class="form-control" formControlName="boardid">
+        <div class="validation" *ngIf="form.get('boardid').touched && form.get('boardid').invalid">
+          <small *ngIf="form.get('boardid').errors.required">Code field can not be empty.</small>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="tradedate">Transaction date</label>
+        <input id="tradedate" type="date" name="tradedate" class="form-control" formControlName="tradedate">
+        <div class="validation" *ngIf="form.get('tradedate').touched && form.get('tradedate').invalid">
+          <small *ngIf="form.get('tradedate').errors.required">Invalid trade date.</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row ml-3 mr-3">
+
+      <div class="form-group col-md">
+        <label for="shortname">Short name</label>
+        <input id="shortname" type="text" name="shortname" class="form-control" formControlName="shortName">
+        <div class="validation" *ngIf="form.get('shortName').touched && form.get('shortName').invalid">
+          <small *ngIf="form.get('shortName').errors.required">Short name field can not me empty.</small>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="secid">Secid code</label>
+        <input id="secid" type="text" name="secid" class="form-control" formControlName="secid">
+        <div class="validation" *ngIf="form.get('secid').touched && form.get('secid').invalid">
+          <small *ngIf="form.get('secid').errors.required">Secid field can not me empty.</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row ml-3 mr-3">
+
+      <div class="form-group col-md">
+        <label for="numTrades">Number of trades</label>
+        <input id="numTrades" type="number" name="numTrades" class="form-control" formControlName="numTrades">
+        <div class="validation" *ngIf="form.get('numTrades').touched && form.get('numTrades').invalid">
+          <small *ngIf="form.get('numTrades').errors.required">Field can not be empty.</small>
+          <small *ngIf="form.get('numTrades').errors.negativeNumbers">Invalid number of trades.</small>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="value">Value</label>
+        <input id="value" type="number" name="file" class="form-control" formControlName="value">
+        <div class="validation" *ngIf="form.get('value').touched && form.get('value').invalid">
+          <small *ngIf="form.get('value').errors.required">Field can not be empty.</small>
+          <small *ngIf="form.get('value').errors.negativeNumbers">Invalid value.</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row ml-3 mr-3">
+
+      <div class="form-group col-md">
+        <label for="open">Starting price</label>
+        <input id="open" type="number" name="file" class="form-control" formControlName="open">
+        <div class="validation" *ngIf="form.get('open').touched && form.get('open').invalid">
+          <small *ngIf="form.get('open').errors.required">Field can not be empty.</small>
+          <small *ngIf="form.get('open').errors.negativeNumbers">Invalid starting price.</small>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="low">Minimum price</label>
+        <input id="low" type="number" name="file" class="form-control" formControlName="low">
+        <div class="validation" *ngIf="form.get('low').touched && form.get('low').invalid">
+          <small *ngIf="form.get('low').errors.required">Field can not be empty.</small>
+          <small *ngIf="form.get('low').errors.negativeNumbers">Invalid minimum price.</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row ml-3 mr-3">
+
+      <div class="form-group col-md">
+        <label for="high">Maximum price</label>
+        <input id="high" type="number" name="file" class="form-control" formControlName="high">
+        <div class="validation" *ngIf="form.get('high').touched && form.get('high').invalid">
+          <small *ngIf="form.get('high').errors.required">Field can not be empty.</small>
+          <small *ngIf="form.get('high').errors.negativeNumbers">Invalid maximum price.</small>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="legalClosePrice">Closing price</label>
+        <input id="legalClosePrice" type="number" name="file" class="form-control" formControlName="legalClosePrice">
+        <div class="validation" *ngIf="form.get('legalClosePrice').touched && form.get('legalClosePrice').invalid">
+          <small *ngIf="form.get('legalClosePrice').errors.required">Field can not be empty.</small>
+          <small *ngIf="form.get('legalClosePrice').errors.negativeNumbers">Invalid closing price.</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row ml-3 mr-3">
+
+      <div class="form-group col-md">
+        <label for="waprice">Weighted average price</label>
+        <input id="waprice" type="number" name="file" class="form-control" formControlName="waprice">
+        <div class="validation" *ngIf="form.get('waprice').touched && form.get('waprice').invalid">
+          <small *ngIf="form.get('waprice').errors.required">Field can not be empty.</small>
+          <small *ngIf="form.get('waprice').errors.negativeNumbers">Invalid average price.</small>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="close">Price for the last transaction</label>
+        <input id="close" type="number" name="file" class="form-control" formControlName="close">
+        <div class="validation" *ngIf="form.get('close').touched && form.get('close').invalid">
+          <small *ngIf="form.get('close').errors.required">Field can not be empty.</small>
+          <small *ngIf="form.get('close').errors.negativeNumbers">Invalid price.</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="row ml-3 mr-3">
+
+      <div class="form-group col-md">
+        <label for="volume">Volume of securities</label>
+        <input id="volume" type="number" name="file" class="form-control" formControlName="volume">
+        <div class="validation" *ngIf="form.get('volume').touched && form.get('volume').invalid">
+          <small *ngIf="form.get('volume').errors.required">Field can not be empty.</small>
+          <small *ngIf="form.get('volume').errors.negativeNumbers">Invalid volume.</small>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="marketPrice2">Market price №2</label>
+        <input id="marketPrice2" type="number" name="file" class="form-control" formControlName="marketPrice2">
+        <div class="validation" *ngIf="form.get('marketPrice2').touched && form.get('marketPrice2').invalid">
+          <small *ngIf="form.get('marketPrice2').errors.required">Field can not be empty.</small>
+          <small *ngIf="form.get('marketPrice2').errors.negativeNumbers">Invalid market price.</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row ml-3 mr-3">
+
+      <div class="form-group col-md">
+        <label for="admittedQuite">Accept the quote</label>
+        <input id="admittedQuite" type="number" name="file" class="form-control" formControlName="admittedQuite">
+        <div class="validation" *ngIf="form.get('admittedQuite').touched && form.get('admittedQuite').invalid">
+          <small *ngIf="form.get('admittedQuite').errors.required">Field can not be empty.</small>
+          <small *ngIf="form.get('admittedQuite').errors.negativeNumbers">Invalid value.</small>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="marketPrice3">Market price №3</label>
+        <input id="marketPrice3" type="number" name="file" class="form-control" formControlName="marketPrice3">
+        <div class="validation" *ngIf="form.get('marketPrice3').touched && form.get('marketPrice3').invalid">
+          <small *ngIf="form.get('marketPrice3').errors.required">Field can not be empty.</small>
+          <small *ngIf="form.get('marketPrice3').errors.negativeNumbers">Invalid market price.</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row ml-3 mr-3">
+
+      <div class="form-group col-md">
+        <label for="mp2ValTrd">Volume of transactions №2 to calculate</label>
+        <input id="mp2ValTrd" type="number" name="file" class="form-control" formControlName="mp2ValTrd">
+        <div class="validation" *ngIf="form.get('mp2ValTrd').touched && form.get('mp2ValTrd').invalid">
+          <small *ngIf="form.get('mp2ValTrd').errors.required">Field can not be empty.</small>
+          <small *ngIf="form.get('mp2ValTrd').errors.negativeNumbers">Invalid volume.</small>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="marketPrice3TradeValue">Volume of transactions №3 to calculate</label>
+        <input id="marketPrice3TradeValue" type="number" name="file" class="form-control" formControlName="marketPrice3TradeValue">
+        <div class="validation" *ngIf="form.get('marketPrice3TradeValue').touched && form.get('marketPrice3TradeValue').invalid">
+          <small *ngIf="form.get('marketPrice3TradeValue').errors.required">Field can not be empty.</small>
+          <small *ngIf="form.get('marketPrice3TradeValue').errors.negativeNumbers">Invalid volume.</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row ml-3 mr-3">
+
+      <div class="form-group col-md">
+        <label for="admittedValue">Transaction volume for calculating the quotation</label>
+        <input id="admittedValue" type="number" name="file" class="form-control" formControlName="admittedValue">
+        <div class="validation" *ngIf="form.get('admittedValue').touched && form.get('admittedValue').invalid">
+          <small *ngIf="form.get('admittedValue').errors.required">Field can not be empty.</small>
+          <small *ngIf="form.get('admittedValue').errors.negativeNumbers">Invalid volume.</small>
+        </div>
+      </div>
+
+      <div class="form-group col-md">
+        <label for="waval">Weighted average volume</label>
+        <input id="waval" type="number" name="file" class="form-control" formControlName="waVal">
+        <div class="validation" *ngIf="form.get('waVal').touched && form.get('waVal').invalid">
+          <small *ngIf="form.get('waVal').errors.required">Field can not be empty.</small>
+          <small *ngIf="form.get('waVal').errors.negativeNumbers">Invalid volume.</small>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mr-4 float-right">
+      <button type="submit" class="btn btn-success mb-3 mr-2" [disabled]="form.invalid || submitted">Save</button>
+    </div>
+  </form>
+</div>

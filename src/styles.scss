@@ -1,1 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+.create-form {
+  max-width: 800px;
+  margin: auto;
+
+}
+
+input {
+  &.ng-invalid.ng-touched {
+    border: 1px solid red;
+  }
+
+  &.ng-valid.ng-touched {
+    border: 1px solid green;
+  }
+}
+
+.validation {
+  color: red;
+}
+
+.header {
+  height: 40px;
+
+  .header-title {
+    align-self: center;
+  }
+
+  .header-controls {
+    float: right;
+  }
+}
+
+.processing {
+  vertical-align: middle;
+}

@@ -1,0 +1,86 @@
+<div *ngIf="!loading; else loadingIcon">
+  <div class="ml-4 mr-5 header">
+    <h2 class="d-inline-block header-title">Securities</h2>
+
+    <div class="controls header-controls">
+      <button class="btn btn-sm btn-outline-primary float-right my-1 item-control d-inline"
+              [routerLink]="['','uploadSecurity']">
+        <i class="fa fa-lg fa-upload"></i>
+      </button>
+
+      <button class="btn btn-sm btn-outline-success float-right my-1 mr-2 item-control d-inline"
+              [routerLink]="['', 'createSecurity']">
+        <i class="fa fa-lg fa-plus"></i>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="securities.length != 0; else noDataBlock">
+    <table class="table table-hover table-responsive mt-2" >
+      <thead>
+      <tr>
+        <th>____________</th>
+        <th>Secid</th>
+        <th>Short name</th>
+        <th>Registration number</th>
+        <th>Name</th>
+        <th>Identification code</th>
+        <th>Is traded</th>
+        <th>Emitent title</th>
+        <th>Emitent inn</th>
+        <th>Emitent okpo</th>
+        <th>Goverment registration</th>
+        <th>Type</th>
+        <th>Group</th>
+        <th>Primary code</th>
+        <th>Market price code</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let security of securities | paginationPipe: currentPage">
+        <td>
+          <div class="controls">
+            <button class="btn btn-sm btn-outline-danger float-right my-1 item-control d-inline"
+                    (click)="delete(security.id)">
+              <i class="fa fa-lg fa-trash-o"></i>
+            </button>
+
+            <button class="btn btn-sm btn-outline-warning float-right my-1 mr-2 item-control d-inline"
+                    [routerLink]="['/editSecurity', security.id]">
+              <i class="fa fa-lg fa-pencil"></i>
+            </button>
+          </div>
+        </td>
+        <td>{{ security.secid }}</td>
+        <td>{{ security.shortName}}</td>
+        <td>{{ security.regNumber }}</td>
+        <td>{{ security.name }}</td>
+        <td>{{ security.isIn }}</td>
+        <td>{{ security.traded | yesNo}}</td>
+        <td>{{ security.emitentTitle }}</td>
+        <td>{{ security.emitentInn }}</td>
+        <td>{{ security.emitentOkpo }}</td>
+        <td>{{ security.gosReg }}</td>
+        <td>{{ security.type }}</td>
+        <td>{{ security.group_ }}</td>
+        <td>{{ security.primaryBoarDid }}</td>
+        <td>{{ security.marketPriceBoarDid }}</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <app-pagination-block [currentPage]="currentPage"
+                          [amountPages]="amountPages"
+                          (onPage)="setPage($event)">
+    </app-pagination-block>
+  </div>
+</div>
+
+
+<ng-template #loadingIcon>
+  <app-spinner></app-spinner>
+</ng-template>
+
+<ng-template #noDataBlock>
+  <app-no-data-block></app-no-data-block>
+</ng-template>

@@ -1,0 +1,45 @@
+<nav aria-label="...">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [class.disabled]="currentPage==1">
+      <a class="page-link" (click)="setPage(1)">First</a>
+    </li>
+
+    <li class="page-item" [class.d-none]="currentPage < amountPages || amountPages < 5">
+      <a class="page-link" (click)="setPage(currentPage - 4)">{{currentPage - 4}}</a>
+    </li>
+
+    <li class="page-item" [class.d-none]="currentPage < amountPages - 1 || amountPages < 4 || (currentPage == amountPages - 1 && amountPages == 4)">
+      <a class="page-link" (click)="setPage(currentPage - 3)">{{currentPage - 3}}</a>
+    </li>
+
+    <li class="page-item" [class.d-none]="currentPage < 3 || amountPages < 3">
+      <a class="page-link" (click)="setPage(currentPage - 2)">{{currentPage - 2}}</a>
+    </li>
+    <li class="page-item" [class.d-none]="currentPage < 2 || amountPages < 2">
+      <a class="page-link" (click)="setPage(currentPage - 1)">{{currentPage - 1}}</a>
+    </li>
+
+    <li class="page-item active">
+      <a class="page-link">{{currentPage}}<span class="sr-only">(current)</span></a>
+    </li>
+
+    <li class="page-item" [class.d-none]="currentPage > amountPages - 1 || amountPages < 2">
+      <a class="page-link" (click)="setPage(currentPage + 1)">{{currentPage + 1}}</a>
+    </li>
+    <li class="page-item" [class.d-none]="currentPage > amountPages - 2 || amountPages < 3">
+      <a class="page-link" (click)="setPage(currentPage + 2)">{{currentPage + 2}}</a>
+    </li>
+
+    <li class="page-item" [class.d-none]="currentPage > 2 || amountPages < 4 || (currentPage == 2 && amountPages == 4)">
+      <a class="page-link" (click)="setPage(currentPage + 3)">{{currentPage + 3}}</a>
+    </li>
+
+    <li class="page-item" [class.d-none]="currentPage > 1 || amountPages < 5">
+      <a class="page-link" (click)="setPage(currentPage + 4)">{{currentPage + 4}}</a>
+    </li>
+
+    <li class="page-item" [class.disabled]="currentPage==amountPages">
+      <a class="page-link" (click)="setPage(amountPages)">Last</a>
+    </li>
+  </ul>
+</nav>

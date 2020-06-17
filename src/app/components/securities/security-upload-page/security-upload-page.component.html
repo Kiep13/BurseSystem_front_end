@@ -1,0 +1,23 @@
+<div class="upload-form mb-3">
+  <button class="btn btn-outline-secondary" [routerLink]="['', 'securities']">🡠 Back to securities</button>
+</div>
+
+
+<div class="card upload-form">
+  <h2 class="ml-3 mt-3">Uploading a security file</h2>
+  <form (submit)="submit()">
+    <div class="form-group ml-3 mr-3">
+      <label for="file">Choose file</label>
+      <input id="file" type="file" name="file" class="form-control-file" [(ngModel)]="file" observeFiles>
+    </div>
+
+    <div class="d-inline-block" *ngIf="submitted">
+      <app-small-spinner class="d-inline-block processing"></app-small-spinner>
+      <div class="d-inline-block processing">
+        <p class="mb-0">Processing your request</p>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success mb-3 mr-3 float-right" [disabled]="submitted || !file">Upload</button>
+  </form>
+</div>
