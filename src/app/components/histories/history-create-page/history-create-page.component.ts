@@ -68,7 +68,7 @@ export class HistoryCreatePageComponent implements OnInit {
     }
     this.submitted = true;
 
-    const date = new Date(this.form.get('dateMask').value);
+    const date = new Date(this.form.get('tradedate').value);
     date.setMinutes(date.getTimezoneOffset());
     console.log(date);
 

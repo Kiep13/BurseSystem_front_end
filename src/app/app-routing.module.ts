@@ -10,11 +10,11 @@ import {HistoryCreatePageComponent} from './components/histories/history-create-
 import {HistoryEditPageComponent} from './components/histories/history-edit-page/history-edit-page.component';
 import {SecurityCreatePageComponent} from './components/securities/security-create-page/security-create-page.component';
 import {SecurityEditPageComponent} from './components/securities/security-edit-page/security-edit-page.component';
-import {ErrorBlockComponent} from "./components/blocks/error-block/error-block.component";
+import {ErrorBlockComponent} from './components/blocks/error-block/error-block.component';
 
 
 const routes: Routes = [
-  {path: 'home', component: HomePageComponent},
+  {path: '', component: HomePageComponent},
   {path: 'histories', component: HistoriesPageComponent},
   {path: 'createHistory', component: HistoryCreatePageComponent},
   {path: 'editHistory/:id', component: HistoryEditPageComponent},

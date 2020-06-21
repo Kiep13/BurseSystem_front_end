@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {HistorySecurity, Options} from '../../shared/interfaces';
 import {HttpService} from '../../shared/services/http.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from "@angular/router";
 @Component({
   selector: 'app-total-page',
   templateUrl: './total-page.component.html',
@@ -33,7 +34,8 @@ export class TotalPageComponent implements OnInit {
   ]);
 
 
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService,
+              private router: Router) {
 
     this.form = new FormGroup({
       sortList: new FormControl('None'),
@@ -51,6 +53,8 @@ export class TotalPageComponent implements OnInit {
         this.total = response;
         this.amountPages = Math.ceil(this.total.length / 10);
         this.loading = false;
+      }, () => {
+        this.router.navigate(['/error']);
       });
   }
 
@@ -121,6 +125,8 @@ export class TotalPageComponent implements OnInit {
       .subscribe(response => {
         this.total = response;
         this.amountPages = Math.ceil(this.total.length / 10);
+      }, () => {
+        this.router.navigate(['/error']);
       });
   }
 }

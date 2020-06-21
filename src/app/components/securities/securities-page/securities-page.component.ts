@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Security} from '../../../shared/interfaces';
 import {HttpService} from '../../../shared/services/http.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-securities-page',
@@ -14,7 +15,8 @@ export class SecuritiesPageComponent implements OnInit {
   currentPage = 1;
   amountPages: number;
 
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.loading = true;
@@ -23,6 +25,8 @@ export class SecuritiesPageComponent implements OnInit {
         this.securities = response;
         this.amountPages = Math.ceil(this.securities.length / 10);
         this.loading = false;
+      },  () => {
+        this.router.navigate(['/error']);
       });
   }
 

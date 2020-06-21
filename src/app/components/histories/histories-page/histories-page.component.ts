@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {History} from '../../../shared/interfaces';
 import {HttpService} from '../../../shared/services/http.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-histories-page',
@@ -14,7 +15,8 @@ export class HistoriesPageComponent implements OnInit {
   currentPage = 1;
   amountPages: number;
 
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.loading = true;
@@ -26,6 +28,8 @@ export class HistoriesPageComponent implements OnInit {
 
         console.log(this.currentPage);
         console.log(this.amountPages);
+      }, () => {
+        this.router.navigate(['/error']);
       });
 
   }
