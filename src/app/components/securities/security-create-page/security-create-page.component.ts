@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {FormValidators} from '../../../shared/validators/FormValidators';
 import {Security} from '../../../shared/interfaces';
 import {HttpService} from '../../../shared/services/http.service';
@@ -13,7 +13,7 @@ import {AlertService} from '../../../shared/services/alert-service';
 })
 export class SecurityCreatePageComponent implements OnInit {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted = false;
 
   constructor(private httpService: HttpService,
@@ -21,22 +21,22 @@ export class SecurityCreatePageComponent implements OnInit {
               private alert: AlertService) { }
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      secid: new FormControl('', [Validators.required]),
-      shortName: new FormControl('', [Validators.required]),
-      regNumber: new FormControl('', [Validators.required]),
-      name: new FormControl('', [Validators.required, FormValidators.securityName]),
-      isIn: new FormControl('', [Validators.required]),
-      isTraded: new FormControl(''), // boolean
-      emitentId: new FormControl('', [Validators.required, FormValidators.negativeNumber]),
-      emitentTitle: new FormControl('', [Validators.required]),
-      emitentInn: new FormControl('', [Validators.required]),
-      emitentOkpo: new FormControl('', [Validators.required]),
-      gosReg: new FormControl('', [Validators.required]),
-      type: new FormControl('', [Validators.required]),
-      group_: new FormControl('', [Validators.required]),
-      primaryBoarDid: new FormControl('', [Validators.required]),
-      marketPriceBoarDid: new FormControl('', [Validators.required]),
+    this.form = new UntypedFormGroup({
+      secid: new UntypedFormControl('', [Validators.required]),
+      shortName: new UntypedFormControl('', [Validators.required]),
+      regNumber: new UntypedFormControl('', [Validators.required]),
+      name: new UntypedFormControl('', [Validators.required, FormValidators.securityName]),
+      isIn: new UntypedFormControl('', [Validators.required]),
+      isTraded: new UntypedFormControl(''), // boolean
+      emitentId: new UntypedFormControl('', [Validators.required, FormValidators.negativeNumber]),
+      emitentTitle: new UntypedFormControl('', [Validators.required]),
+      emitentInn: new UntypedFormControl('', [Validators.required]),
+      emitentOkpo: new UntypedFormControl('', [Validators.required]),
+      gosReg: new UntypedFormControl('', [Validators.required]),
+      type: new UntypedFormControl('', [Validators.required]),
+      group_: new UntypedFormControl('', [Validators.required]),
+      primaryBoarDid: new UntypedFormControl('', [Validators.required]),
+      marketPriceBoarDid: new UntypedFormControl('', [Validators.required]),
     });
   }
 

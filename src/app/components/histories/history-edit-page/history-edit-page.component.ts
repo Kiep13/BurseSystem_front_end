@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {HttpService} from '../../../shared/services/http.service';
 import {History} from '../../../shared/interfaces';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {FormValidators} from '../../../shared/validators/FormValidators';
 import {AlertService} from '../../../shared/services/alert-service';
 
@@ -14,7 +14,7 @@ import {AlertService} from '../../../shared/services/alert-service';
 export class HistoryEditPageComponent implements OnInit {
 
   history: History = null;
-  form: FormGroup;
+  form: UntypedFormGroup;
   loading = true;
   submitted = false;
 
@@ -28,42 +28,42 @@ export class HistoryEditPageComponent implements OnInit {
       this.httpService.getHistoryById(+params.id)
         .subscribe(response => {
           this.history = response;
-          this.form = new FormGroup({
-            boardid: new FormControl(this.history.boardid, [Validators.required]),
-            tradedate: new FormControl(new Date(this.history.tradedate), [Validators.required]),
-            shortName: new FormControl(this.history.shortName, [Validators.required]),
-            secid: new FormControl(this.history.secid, [Validators.required]),
-            numTrades: new FormControl(this.history.numTrades,
+          this.form = new UntypedFormGroup({
+            boardid: new UntypedFormControl(this.history.boardid, [Validators.required]),
+            tradedate: new UntypedFormControl(new Date(this.history.tradedate), [Validators.required]),
+            shortName: new UntypedFormControl(this.history.shortName, [Validators.required]),
+            secid: new UntypedFormControl(this.history.secid, [Validators.required]),
+            numTrades: new UntypedFormControl(this.history.numTrades,
               [FormValidators.negativeNumber]),
-            value: new FormControl(this.history.value,
+            value: new UntypedFormControl(this.history.value,
               [FormValidators.negativeNumber]),
-            open: new FormControl(this.history.open,
+            open: new UntypedFormControl(this.history.open,
               [FormValidators.negativeNumber]),
-            low: new FormControl(this.history.low,
+            low: new UntypedFormControl(this.history.low,
               [FormValidators.negativeNumber]),
-            high: new FormControl(this.history.high,
+            high: new UntypedFormControl(this.history.high,
               [FormValidators.negativeNumber]),
-            legalClosePrice: new FormControl(this.history.legalClosePrice,
+            legalClosePrice: new UntypedFormControl(this.history.legalClosePrice,
               [FormValidators.negativeNumber]),
-            waprice: new FormControl(this.history.waprice,
+            waprice: new UntypedFormControl(this.history.waprice,
               [FormValidators.negativeNumber]),
-            close: new FormControl(this.history.close,
+            close: new UntypedFormControl(this.history.close,
               [FormValidators.negativeNumber]),
-            volume: new FormControl(this.history.volume,
+            volume: new UntypedFormControl(this.history.volume,
               [FormValidators.negativeNumber]),
-            marketPrice2: new FormControl(this.history.marketPrice2,
+            marketPrice2: new UntypedFormControl(this.history.marketPrice2,
               [FormValidators.negativeNumber]),
-            marketPrice3: new FormControl(this.history.marketPrice3,
+            marketPrice3: new UntypedFormControl(this.history.marketPrice3,
               [FormValidators.negativeNumber]),
-            admittedQuite: new FormControl(this.history.admittedQuite,
+            admittedQuite: new UntypedFormControl(this.history.admittedQuite,
               [FormValidators.negativeNumber]),
-            mp2ValTrd: new FormControl(this.history.mp2ValTrd,
+            mp2ValTrd: new UntypedFormControl(this.history.mp2ValTrd,
               [FormValidators.negativeNumber]),
-            marketPrice3TradeValue: new FormControl(this.history.marketPrice3TradeValue,
+            marketPrice3TradeValue: new UntypedFormControl(this.history.marketPrice3TradeValue,
               [FormValidators.negativeNumber]),
-            admittedValue: new FormControl(this.history.admittedValue,
+            admittedValue: new UntypedFormControl(this.history.admittedValue,
               [FormValidators.negativeNumber]),
-            waVal: new FormControl(this.history.waVal,
+            waVal: new UntypedFormControl(this.history.waVal,
               [FormValidators.negativeNumber])
           });
           this.loading = false;

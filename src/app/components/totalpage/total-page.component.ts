@@ -1,8 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {HistorySecurity, Options} from '../../shared/interfaces';
 import {HttpService} from '../../shared/services/http.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from "@angular/router";
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+
 @Component({
   selector: 'app-total-page',
   templateUrl: './total-page.component.html',
@@ -17,7 +18,7 @@ export class TotalPageComponent implements OnInit {
   currentPage = 1;
   amountPages: number;
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   tableHeaders = ['Secid', 'Registration number', 'Name', 'Emitent title', 'Trade date',
     'Number of trades', 'Starting price', 'Price for the last transaction'];
 
@@ -37,12 +38,12 @@ export class TotalPageComponent implements OnInit {
   constructor(private httpService: HttpService,
               private router: Router) {
 
-    this.form = new FormGroup({
-      sortList: new FormControl('None'),
-      directionList: new FormControl('inc'),
-      filterList: new FormControl('no filter'),
-      dateMask: new FormControl(''),
-      titleMask: new FormControl('', Validators.required)
+    this.form = new UntypedFormGroup({
+      sortList: new UntypedFormControl('None'),
+      directionList: new UntypedFormControl('inc'),
+      filterList: new UntypedFormControl('no filter'),
+      dateMask: new UntypedFormControl(''),
+      titleMask: new UntypedFormControl('', Validators.required)
     });
   }
 

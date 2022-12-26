@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {FormValidators} from '../../../shared/validators/FormValidators';
 import {HttpService} from '../../../shared/services/http.service';
 import {History} from '../../../shared/interfaces';
@@ -14,7 +14,7 @@ import {AlertService} from '../../../shared/services/alert-service';
 })
 export class HistoryCreatePageComponent implements OnInit {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   submitted = false;
 
   constructor(private httpService: HttpService,
@@ -22,42 +22,42 @@ export class HistoryCreatePageComponent implements OnInit {
               private alert: AlertService) {}
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      boardid: new FormControl('', [Validators.required]),
-      tradedate: new FormControl('', [Validators.required]),
-      shortName: new FormControl('', [Validators.required]),
-      secid: new FormControl('', [Validators.required]),
-      numTrades: new FormControl('',
+    this.form = new UntypedFormGroup({
+      boardid: new UntypedFormControl('', [Validators.required]),
+      tradedate: new UntypedFormControl('', [Validators.required]),
+      shortName: new UntypedFormControl('', [Validators.required]),
+      secid: new UntypedFormControl('', [Validators.required]),
+      numTrades: new UntypedFormControl('',
         [FormValidators.negativeNumber]),
-      value: new FormControl('',
+      value: new UntypedFormControl('',
         [FormValidators.negativeNumber]),
-      open: new FormControl('',
+      open: new UntypedFormControl('',
         [FormValidators.negativeNumber]),
-      low: new FormControl('',
+      low: new UntypedFormControl('',
         [FormValidators.negativeNumber]),
-      high: new FormControl('',
+      high: new UntypedFormControl('',
         [FormValidators.negativeNumber]),
-      legalClosePrice: new FormControl('',
+      legalClosePrice: new UntypedFormControl('',
         [FormValidators.negativeNumber]),
-      waprice: new FormControl('',
+      waprice: new UntypedFormControl('',
         [FormValidators.negativeNumber]),
-      close: new FormControl('',
+      close: new UntypedFormControl('',
         [FormValidators.negativeNumber]),
-      volume: new FormControl('',
+      volume: new UntypedFormControl('',
         [FormValidators.negativeNumber]),
-      marketPrice2: new FormControl('',
+      marketPrice2: new UntypedFormControl('',
         [FormValidators.negativeNumber]),
-      marketPrice3: new FormControl('',
+      marketPrice3: new UntypedFormControl('',
         [FormValidators.negativeNumber]),
-      admittedQuite: new FormControl('',
+      admittedQuite: new UntypedFormControl('',
         [FormValidators.negativeNumber]),
-      mp2ValTrd: new FormControl('',
+      mp2ValTrd: new UntypedFormControl('',
         [FormValidators.negativeNumber]),
-      marketPrice3TradeValue: new FormControl('',
+      marketPrice3TradeValue: new UntypedFormControl('',
         [FormValidators.negativeNumber]),
-      admittedValue: new FormControl('',
+      admittedValue: new UntypedFormControl('',
         [FormValidators.negativeNumber]),
-      waVal: new FormControl('',
+      waVal: new UntypedFormControl('',
         [FormValidators.negativeNumber])
     });
   }

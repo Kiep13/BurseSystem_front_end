@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {HttpService} from '../../../shared/services/http.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {Security} from '../../../shared/interfaces';
 import {FormValidators} from '../../../shared/validators/FormValidators';
 import {AlertService} from '../../../shared/services/alert-service';
@@ -14,7 +14,7 @@ import {AlertService} from '../../../shared/services/alert-service';
 export class SecurityEditPageComponent implements OnInit {
 
   security: Security = null;
-  form: FormGroup;
+  form: UntypedFormGroup;
   loading = true;
   submitted = false;
 
@@ -28,22 +28,22 @@ export class SecurityEditPageComponent implements OnInit {
       this.httpService.getSecurityById(+params.id)
         .subscribe(response => {
           this.security = response;
-          this.form = new FormGroup({
-            secid: new FormControl(this.security.secid, [Validators.required]),
-            shortName: new FormControl(this.security.shortName, [Validators.required]),
-            regNumber: new FormControl(this.security.regNumber, [Validators.required]),
-            name: new FormControl(this.security.name, [Validators.required, FormValidators.securityName]),
-            isIn: new FormControl(this.security.isIn, [Validators.required]),
-            isTraded: new FormControl(this.security.traded), // boolean
-            emitentId: new FormControl(this.security.emitentId, [Validators.required, FormValidators.negativeNumber]),
-            emitentTitle: new FormControl(this.security.emitentTitle, [Validators.required]),
-            emitentInn: new FormControl(this.security.emitentInn, [Validators.required]),
-            emitentOkpo: new FormControl(this.security.emitentOkpo, [Validators.required]),
-            gosReg: new FormControl(this.security.gosReg, [Validators.required]),
-            type: new FormControl(this.security.type, [Validators.required]),
-            group_: new FormControl(this.security.group_, [Validators.required]),
-            primaryBoarDid: new FormControl(this.security.primaryBoarDid, [Validators.required]),
-            marketPriceBoarDid: new FormControl(this.security.marketPriceBoarDid, [Validators.required]),
+          this.form = new UntypedFormGroup({
+            secid: new UntypedFormControl(this.security.secid, [Validators.required]),
+            shortName: new UntypedFormControl(this.security.shortName, [Validators.required]),
+            regNumber: new UntypedFormControl(this.security.regNumber, [Validators.required]),
+            name: new UntypedFormControl(this.security.name, [Validators.required, FormValidators.securityName]),
+            isIn: new UntypedFormControl(this.security.isIn, [Validators.required]),
+            isTraded: new UntypedFormControl(this.security.traded), // boolean
+            emitentId: new UntypedFormControl(this.security.emitentId, [Validators.required, FormValidators.negativeNumber]),
+            emitentTitle: new UntypedFormControl(this.security.emitentTitle, [Validators.required]),
+            emitentInn: new UntypedFormControl(this.security.emitentInn, [Validators.required]),
+            emitentOkpo: new UntypedFormControl(this.security.emitentOkpo, [Validators.required]),
+            gosReg: new UntypedFormControl(this.security.gosReg, [Validators.required]),
+            type: new UntypedFormControl(this.security.type, [Validators.required]),
+            group_: new UntypedFormControl(this.security.group_, [Validators.required]),
+            primaryBoarDid: new UntypedFormControl(this.security.primaryBoarDid, [Validators.required]),
+            marketPriceBoarDid: new UntypedFormControl(this.security.marketPriceBoarDid, [Validators.required]),
           });
           this.loading = false;
         });
