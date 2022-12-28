@@ -24,7 +24,6 @@ import { YesNoPipe } from './shared/pipes/yes-no.pipe';
 import { PaginationBlockComponent } from './components/blocks/pagination-block/pagination-block.component';
 import { NoDataBlockComponent } from './components/blocks/no-data-block/no-data-block.component';
 import { SmallSpinnerComponent } from './components/blocks/small-spinner/small-spinner.component';
-import { ErrorBlockComponent } from './components/blocks/error-block/error-block.component';
 import { AlertComponent } from './components/blocks/alert/alert.component';
 import { AlertService} from './shared/services/alert-service';
 
@@ -49,7 +48,6 @@ import { AlertService} from './shared/services/alert-service';
     PaginationBlockComponent,
     NoDataBlockComponent,
     SmallSpinnerComponent,
-    ErrorBlockComponent,
     AlertComponent
   ],
   imports: [

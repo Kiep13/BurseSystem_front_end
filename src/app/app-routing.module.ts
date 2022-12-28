@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import {HistoriesPageComponent} from './components/histories/histories-page/histories-page.component';
 import {HomePageComponent} from './components/home-page/home-page.component';
 import {SecuritiesPageComponent} from './components/securities/securities-page/securities-page.component';
@@ -10,8 +11,6 @@ import {HistoryCreatePageComponent} from './components/histories/history-create-
 import {HistoryEditPageComponent} from './components/histories/history-edit-page/history-edit-page.component';
 import {SecurityCreatePageComponent} from './components/securities/security-create-page/security-create-page.component';
 import {SecurityEditPageComponent} from './components/securities/security-edit-page/security-edit-page.component';
-import {ErrorBlockComponent} from './components/blocks/error-block/error-block.component';
-
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -24,7 +23,13 @@ const routes: Routes = [
   {path: 'securities', component: SecuritiesPageComponent},
   {path: 'uploadSecurity', component: SecurityUploadPageComponent},
   {path: 'total', component: TotalPageComponent},
-  {path: 'error', component: ErrorBlockComponent},
+  {
+    path: 'error',
+    loadChildren: () => {
+      return import('./pages/error/error.module').then((m) => m.ErrorModule);
+    },
+    title: 'Error'
+  },
   {path: '**', redirectTo: '/error'}
 ];
 
