@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import {HistoriesPageComponent} from './components/histories/histories-page/histories-page.component';
-import {HomePageComponent} from './components/home-page/home-page.component';
 import {SecuritiesPageComponent} from './components/securities/securities-page/securities-page.component';
 import {TotalPageComponent} from './components/totalpage/total-page.component';
 import {HistoryUploadPageComponent} from './components/histories/history-upload-page/history-upload-page.component';
@@ -13,7 +12,13 @@ import {SecurityCreatePageComponent} from './components/securities/security-crea
 import {SecurityEditPageComponent} from './components/securities/security-edit-page/security-edit-page.component';
 
 const routes: Routes = [
-  {path: '', component: HomePageComponent},
+  {
+    path: '',
+    loadChildren: () => {
+      return import('./pages/home/home.module').then((m) => m.HomeModule);
+    },
+    title: 'Home'
+  },
   {path: 'histories', component: HistoriesPageComponent},
   {path: 'createHistory', component: HistoryCreatePageComponent},
   {path: 'editHistory/:id', component: HistoryEditPageComponent},

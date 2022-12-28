@@ -7,7 +7,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {FileInputValueDirective} from './shared/direcrives/file-input-value-accessor.directive';
 import { HistoriesPageComponent } from './components/histories/histories-page/histories-page.component';
-import { HomePageComponent } from './components/home-page/home-page.component';
 import { SecuritiesPageComponent } from './components/securities/securities-page/securities-page.component';
 import { HeaderComponent } from './components/blocks/header/header.component';
 import { SpinnerComponent } from './components/blocks/spinner/spinner.component';
@@ -32,7 +31,6 @@ import { AlertService} from './shared/services/alert-service';
     AppComponent,
     FileInputValueDirective,
     HistoriesPageComponent,
-    HomePageComponent,
     SecuritiesPageComponent,
     HeaderComponent,
     SpinnerComponent,
