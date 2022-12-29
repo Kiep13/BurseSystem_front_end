@@ -4,12 +4,12 @@
 
     <div class="controls header-controls">
       <button class="btn btn-sm btn-outline-primary float-right my-1 item-control d-inline"
-              [routerLink]="['','uploadHistory']">
+              [routerLink]="['','histories', 'upload']">
         <i class="fa fa-lg fa-upload"></i>
       </button>
 
       <button class="btn btn-sm btn-outline-success float-right my-1 mr-2 item-control d-inline"
-              [routerLink]="['', 'createHistory']">
+              [routerLink]="['', 'histories', 'create']">
         <i class="fa fa-lg fa-plus"></i>
       </button>
     </div>
@@ -52,7 +52,7 @@
             </button>
 
             <button class="btn btn-sm btn-outline-warning float-right my-1 mr-2 item-control d-inline"
-                    [routerLink]="['/editHistory', history.id]">
+                    [routerLink]="['histories', 'edit', history.id]">
               <i class="fa fa-lg fa-pencil"></i>
             </button>
           </div>

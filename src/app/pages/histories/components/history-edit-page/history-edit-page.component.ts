@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {HttpService} from '../../../shared/services/http.service';
-import {History} from '../../../shared/interfaces';
+import {HttpService} from '../../../../shared/services/http.service';
+import {History} from '../../../../shared/interfaces';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
-import {FormValidators} from '../../../shared/validators/FormValidators';
-import {AlertService} from '../../../shared/services/alert-service';
+import {FormValidators} from '../../../../shared/validators/FormValidators';
+import {AlertService} from '../../../../shared/services/alert-service';
 
 @Component({
   selector: 'app-history-edit-page',

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
-import {FormValidators} from '../../../shared/validators/FormValidators';
-import {HttpService} from '../../../shared/services/http.service';
-import {History} from '../../../shared/interfaces';
+import {FormValidators} from '../../../../shared/validators/FormValidators';
+import {HttpService} from '../../../../shared/services/http.service';
+import {History} from '../../../../shared/interfaces';
 import {Router} from '@angular/router';
-import {AlertService} from '../../../shared/services/alert-service';
+import {AlertService} from '../../../../shared/services/alert-service';
 
 
 @Component({

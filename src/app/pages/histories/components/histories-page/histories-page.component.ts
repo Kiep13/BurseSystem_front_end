@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {History} from '../../../shared/interfaces';
-import {HttpService} from '../../../shared/services/http.service';
-import {Router} from "@angular/router";
+import { Router } from '@angular/router';
+
+import { HttpService } from '../../../../shared/services/http.service';
+import { History } from '../../../../shared/interfaces';
 
 @Component({
   selector: 'app-histories-page',
@@ -16,7 +17,8 @@ export class HistoriesPageComponent implements OnInit {
   amountPages: number;
 
   constructor(private httpService: HttpService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit(): void {
     this.loading = true;
