@@ -1,34 +1,17 @@
+import { DateValueAccessorModule } from 'angular-date-value-accessor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
+import { AlertService, HttpService } from './shared/services';
+import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
-import {FileInputValueDirective} from './shared/direcrives/file-input-value-accessor.directive';
-import { HeaderComponent } from './components/blocks/header/header.component';
-import { SpinnerComponent } from './components/blocks/spinner/spinner.component';
-import { PaginationPipe } from './shared/pipes/pagination.pipe';
-import { DateValueAccessorModule} from 'angular-date-value-accessor';
-import { YesNoPipe } from './shared/pipes/yes-no.pipe';
-import { PaginationBlockComponent } from './components/blocks/pagination-block/pagination-block.component';
-import { NoDataBlockComponent } from './components/blocks/no-data-block/no-data-block.component';
-import { SmallSpinnerComponent } from './components/blocks/small-spinner/small-spinner.component';
-import { AlertComponent } from './components/blocks/alert/alert.component';
-import { AlertService} from './shared/services/alert-service';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    FileInputValueDirective,
-    HeaderComponent,
-    SpinnerComponent,
-    PaginationPipe,
-    YesNoPipe,
-    PaginationBlockComponent,
-    NoDataBlockComponent,
-    SmallSpinnerComponent,
-    AlertComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -36,11 +19,14 @@ import { AlertService} from './shared/services/alert-service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    DateValueAccessorModule
+    DateValueAccessorModule,
+    SharedModule
   ],
   providers: [
-    AlertService
+    AlertService,
+    HttpService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
