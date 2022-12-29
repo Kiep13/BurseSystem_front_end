@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Security} from '../../../shared/interfaces';
-import {HttpService} from '../../../shared/services/http.service';
+import {Security} from '../../../../shared/interfaces';
+import {HttpService} from '../../../../shared/services/http.service';
 import {Router} from "@angular/router";
 
 @Component({

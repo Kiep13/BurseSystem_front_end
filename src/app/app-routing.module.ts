@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {SecuritiesPageComponent} from './components/securities/securities-page/securities-page.component';
 import {TotalPageComponent} from './components/totalpage/total-page.component';
-import {SecurityUploadPageComponent} from './components/securities/security-upload-page/security-upload-page.component';
-import {SecurityCreatePageComponent} from './components/securities/security-create-page/security-create-page.component';
-import {SecurityEditPageComponent} from './components/securities/security-edit-page/security-edit-page.component';
 
 const routes: Routes = [
   {
@@ -22,10 +18,13 @@ const routes: Routes = [
     },
     title: 'Histories'
   },
-  {path: 'createSecurity', component: SecurityCreatePageComponent},
-  {path: 'editSecurity/:id', component: SecurityEditPageComponent},
-  {path: 'securities', component: SecuritiesPageComponent},
-  {path: 'uploadSecurity', component: SecurityUploadPageComponent},
+  {
+    path: 'securities',
+    loadChildren: () => {
+      return import('./pages/securities/securities.module').then((m) => m.SecuritiesModule);
+    },
+    title: 'Histories'
+  },
   {path: 'total', component: TotalPageComponent},
   {
     path: 'error',

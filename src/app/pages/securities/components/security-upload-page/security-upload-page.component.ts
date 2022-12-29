@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpService} from '../../../shared/services/http.service';
+import {HttpService} from '../../../../shared/services/http.service';
 import {Router} from '@angular/router';
-import {AlertService} from '../../../shared/services/alert-service';
+import {AlertService} from '../../../../shared/services/alert-service';
 
 @Component({
   selector: 'app-security-upload-page',

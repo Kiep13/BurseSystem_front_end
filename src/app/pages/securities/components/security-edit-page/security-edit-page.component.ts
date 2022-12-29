@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {HttpService} from '../../../shared/services/http.service';
+import {HttpService} from '../../../../shared/services/http.service';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
-import {Security} from '../../../shared/interfaces';
-import {FormValidators} from '../../../shared/validators/FormValidators';
-import {AlertService} from '../../../shared/services/alert-service';
+import {Security} from '../../../../shared/interfaces';
+import {FormValidators} from '../../../../shared/validators/FormValidators';
+import {AlertService} from '../../../../shared/services/alert-service';
 
 @Component({
   selector: 'app-security-edit-page',
