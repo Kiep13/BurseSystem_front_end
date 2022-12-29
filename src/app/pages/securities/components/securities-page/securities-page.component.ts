@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Security} from '../../../../shared/interfaces';
+import {ISecurity} from '../../../../shared/interfaces';
 import {HttpService} from '../../../../shared/services/http.service';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-securities-page',
@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
 })
 export class SecuritiesPageComponent implements OnInit {
 
-  securities: Security[];
+  securities: ISecurity[];
   loading = false;
   currentPage = 1;
   amountPages: number;

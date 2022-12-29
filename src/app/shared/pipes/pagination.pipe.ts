@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {History, HistorySecurity, Security} from '../interfaces';
+import {IHistory, ISecurity} from '../interfaces';
 
 const ITEMS_AMOUNT = 10;
 
@@ -9,7 +9,7 @@ const ITEMS_AMOUNT = 10;
 })
 export class PaginationPipe implements PipeTransform {
 
-  transform(list: Array<History| Security| HistorySecurity>, numberPage: number ): Array<History| Security| HistorySecurity> {
+  transform(list: Array<IHistory| ISecurity>, numberPage: number ): Array<IHistory | ISecurity> {
     numberPage--;
     return list.filter((item, idx) => {
       return idx >= (numberPage * 10) && idx < (numberPage * 10 + ITEMS_AMOUNT);

@@ -4,7 +4,7 @@ import { EMPTY, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { HttpService } from '../../../../shared/services';
-import { History } from '../../../../shared/interfaces';
+import { IHistory } from '../../../../shared/interfaces';
 
 @Component({
   selector: 'app-histories',
@@ -13,7 +13,7 @@ import { History } from '../../../../shared/interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HistoriesComponent implements OnInit {
-  public histories: History[] = [];
+  public histories: IHistory[] = [];
   public loading = true;
 
   public amountPages: number;
@@ -50,7 +50,7 @@ export class HistoriesComponent implements OnInit {
     this.httpService.getHistories()
       .pipe(
         take(1),
-        tap((response: History[]) => {
+        tap((response: IHistory[]) => {
           this.histories = response;
           this.amountPages = Math.ceil(this.histories.length / 10);
           this.loading = false;

@@ -1,23 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import {HttpService} from '../../../../shared/services/http.service';
+import { Component } from '@angular/core';
 import {Router} from '@angular/router';
-import {AlertService} from '../../../../shared/services/alert-service';
+
+import {AlertService, HttpService} from '../../../../shared/services';
 
 @Component({
   selector: 'app-security-upload-page',
   templateUrl: './security-upload-page.component.html',
   styleUrls: ['./security-upload-page.component.scss']
 })
-export class SecurityUploadPageComponent implements OnInit {
+export class SecurityUploadPageComponent {
 
   file: File | null;
   submitted = false;
 
   constructor(private httpService: HttpService,
               private router: Router,
-              private alert: AlertService) { }
-
-  ngOnInit(): void {
+              private alert: AlertService) {
   }
 
   submit() {

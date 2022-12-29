@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {HttpService} from '../../../../shared/services/http.service';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
-import {Security} from '../../../../shared/interfaces';
+import {ISecurity} from '../../../../shared/interfaces';
 import {FormValidators} from '../../../../shared/validators/FormValidators';
 import {AlertService} from '../../../../shared/services/alert-service';
 
@@ -13,7 +13,7 @@ import {AlertService} from '../../../../shared/services/alert-service';
 })
 export class SecurityEditPageComponent implements OnInit {
 
-  security: Security = null;
+  security: ISecurity = null;
   form: UntypedFormGroup;
   loading = true;
   submitted = false;
@@ -56,7 +56,7 @@ export class SecurityEditPageComponent implements OnInit {
     }
     this.submitted = true;
 
-    const security: Security = {
+    const security: ISecurity = {
       id: this.security.id,
       secid: this.form.get('secid').value,
       shortName: this.form.get('shortName').value,

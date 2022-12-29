@@ -19,7 +19,6 @@
     <table class="table table-hover table-responsive mt-2" >
       <thead>
       <tr class="fixed-header">
-        <th>____________</th>
         <th>Code of trad.mode</th>
         <th>Trade date</th>
         <th>Short name</th>
@@ -40,23 +39,11 @@
         <th>Market price №3 trade value</th>
         <th>Admitted value</th>
         <th>Weighted average value</th>
+        <th>____________</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let history of histories | paginationPipe: currentPage">
-        <td>
-          <div class="controls">
-            <button class="btn btn-sm btn-outline-danger float-right my-1 item-control d-inline"
-                    (click)="delete(history.id)">
-              <i class="fa fa-lg fa-trash-o"></i>
-            </button>
-
-            <button class="btn btn-sm btn-outline-warning float-right my-1 mr-2 item-control d-inline"
-                    [routerLink]="['histories', 'edit', history.id]">
-              <i class="fa fa-lg fa-pencil"></i>
-            </button>
-          </div>
-        </td>
         <td>{{ history.boardid }}</td>
         <td>{{ history.tradedate | date:'dd.MM.yyyy' }}</td>
         <td>{{ history.shortName }}</td>
@@ -77,6 +64,19 @@
         <td>{{ history.marketPrice3TradeValue }}</td>
         <td>{{ history.admittedValue }}</td>
         <td>{{ history.waVal }}</td>
+        <td>
+          <div class="controls">
+            <button class="btn btn-sm btn-outline-danger float-right my-1 item-control d-inline"
+                    (click)="delete(history.id)">
+              <i class="fa fa-lg fa-trash-o"></i>
+            </button>
+
+            <button class="btn btn-sm btn-outline-warning float-right my-1 mr-2 item-control d-inline"
+                    [routerLink]="['histories', 'edit', history.id]">
+              <i class="fa fa-lg fa-pencil"></i>
+            </button>
+          </div>
+        </td>
       </tr>
       </tbody>
     </table>

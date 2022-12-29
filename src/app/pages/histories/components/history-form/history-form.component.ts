@@ -6,7 +6,7 @@ import { EMPTY } from 'rxjs';
 
 import { AlertService, HttpService } from '../../../../shared/services';
 import { FormValidators } from '../../../../shared/validators';
-import { History } from '../../../../shared/interfaces';
+import { IHistory } from '../../../../shared/interfaces';
 
 @Component({
   selector: 'app-history-form',
@@ -73,7 +73,7 @@ export class HistoryFormComponent {
     date.setMinutes(date.getTimezoneOffset());
     console.log(date);
 
-    const history: History = {
+    const history: IHistory = {
       boardid: this.form.get('boardid').value,
       tradedate: date,
       shortName: this.form.get('shortName').value,

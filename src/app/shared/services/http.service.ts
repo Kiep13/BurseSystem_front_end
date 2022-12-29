@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
-import {History, HistorySecurity, Options, Security} from '../interfaces';
+
+import {IHistory, IOptions, ISecurity} from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -11,23 +12,23 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
-  public getHistories(): Observable<History[]>  {
-    return this.http.get<History[]>(this.baseUrl + 'histories');
+  public getHistories(): Observable<IHistory[]>  {
+    return this.http.get<IHistory[]>(this.baseUrl + 'histories');
   }
 
-  public getHistoryById(id: number): Observable<History>  {
-    return this.http.get<History>(this.baseUrl + `getHistory/${id}`);
+  public getHistoryById(id: number): Observable<IHistory>  {
+    return this.http.get<IHistory>(this.baseUrl + `getHistory/${id}`);
   }
 
   public uploadHistory(data: FormData): Observable<any> {
     return this.http.post<any>(this.baseUrl + 'uploadHistory', data);
   }
 
-  public addHistory(history: History): Observable<any> {
+  public addHistory(history: IHistory): Observable<any> {
     return this.http.post<any>(this.baseUrl + 'addHistory', history);
   }
 
-  public editHistory(history: History): Observable<any> {
+  public editHistory(history: IHistory): Observable<any> {
     return this.http.put<any>(this.baseUrl + 'editHistory', history);
   }
 
@@ -35,23 +36,23 @@ export class HttpService {
     return this.http.delete<any>(this.baseUrl + `deleteHistory/${id}`);
   }
 
-  public getSecurities(): Observable<Security[]>  {
-    return this.http.get<Security[]>(this.baseUrl + 'securities');
+  public getSecurities(): Observable<ISecurity[]>  {
+    return this.http.get<ISecurity[]>(this.baseUrl + 'securities');
   }
 
-  public getSecurityById(id: number): Observable<Security>  {
-    return this.http.get<Security>(this.baseUrl + `getSecurity/${id}`);
+  public getSecurityById(id: number): Observable<ISecurity>  {
+    return this.http.get<ISecurity>(this.baseUrl + `getSecurity/${id}`);
   }
 
   public uploadSecurity(data: FormData): Observable<any> {
     return this.http.post(this.baseUrl + 'uploadSecurity', data);
   }
 
-  public addSecurity(security: Security): Observable<any> {
+  public addSecurity(security: ISecurity): Observable<any> {
     return this.http.post<any>(this.baseUrl + 'addSecurity', security);
   }
 
-  public editSecurity(security: Security): Observable<any> {
+  public editSecurity(security: ISecurity): Observable<any> {
     return this.http.put<any>(this.baseUrl + 'editSecurity', security);
   }
 
@@ -59,19 +60,19 @@ export class HttpService {
     return this.http.delete<any>(this.baseUrl + `deleteSecurity/${id}`);
   }
 
-  public getTotalStatement(): Observable<HistorySecurity[]> {
-    return this.http.get<HistorySecurity[]>(this.baseUrl + 'histories');
+  public getTotalStatement(): Observable<IHistory[]> {
+    return this.http.get<IHistory[]>(this.baseUrl + 'histories');
   }
 
-  public getSortedTotal(options: Options): Observable<HistorySecurity[]> {
-    return this.http.post<HistorySecurity[]>(this.baseUrl + 'sortedHistories', options);
+  public getSortedTotal(options: IOptions): Observable<IHistory[]> {
+    return this.http.post<IHistory[]>(this.baseUrl + 'sortedHistories', options);
   }
 
-  public getFilteredByDataTotal(options: Options): Observable<HistorySecurity[]> {
-    return this.http.post<HistorySecurity[]>(this.baseUrl + 'filteredByDataHistories', options);
+  public getFilteredByDataTotal(options: IOptions): Observable<IHistory[]> {
+    return this.http.post<IHistory[]>(this.baseUrl + 'filteredByDataHistories', options);
   }
 
-  public getFilteredByTitleTotal(options: Options): Observable<HistorySecurity[]> {
-    return this.http.post<HistorySecurity[]>(this.baseUrl + 'filteredByTitleHistories', options);
+  public getFilteredByTitleTotal(options: IOptions): Observable<IHistory[]> {
+    return this.http.post<IHistory[]>(this.baseUrl + 'filteredByTitleHistories', options);
   }
 }

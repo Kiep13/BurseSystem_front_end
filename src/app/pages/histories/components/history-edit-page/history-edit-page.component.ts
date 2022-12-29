@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {HttpService} from '../../../../shared/services/http.service';
-import {History} from '../../../../shared/interfaces';
+import {IHistory} from '../../../../shared/interfaces';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {FormValidators} from '../../../../shared/validators/FormValidators';
 import {AlertService} from '../../../../shared/services/alert-service';
@@ -13,7 +13,7 @@ import {AlertService} from '../../../../shared/services/alert-service';
 })
 export class HistoryEditPageComponent implements OnInit {
 
-  history: History = null;
+  history: IHistory = null;
   form: UntypedFormGroup;
   loading = true;
   submitted = false;
@@ -81,7 +81,7 @@ export class HistoryEditPageComponent implements OnInit {
     date.setMinutes(date.getTimezoneOffset());
     console.log(date);
 
-    const history: History = {
+    const history: IHistory = {
       id: this.history.id,
       boardid: this.form.get('boardid').value,
       tradedate: date,

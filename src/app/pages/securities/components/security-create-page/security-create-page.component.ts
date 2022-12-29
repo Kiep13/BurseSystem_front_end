@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {FormValidators} from '../../../../shared/validators/FormValidators';
-import {Security} from '../../../../shared/interfaces';
+import {ISecurity} from '../../../../shared/interfaces';
 import {HttpService} from '../../../../shared/services/http.service';
 import {Router} from '@angular/router';
 import {AlertService} from '../../../../shared/services/alert-service';
@@ -46,7 +46,7 @@ export class SecurityCreatePageComponent implements OnInit {
     }
     this.submitted = true;
 
-    const security: Security = {
+    const security: ISecurity = {
       secid: this.form.get('secid').value,
       shortName: this.form.get('shortName').value,
       regNumber: this.form.get('regNumber').value,

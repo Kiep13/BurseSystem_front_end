@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {HistorySecurity, Options} from '../../shared/interfaces';
+import {IHistory, IOptions} from '../../shared/interfaces';
 import {HttpService} from '../../shared/services/http.service';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
@@ -12,7 +12,7 @@ import {Router} from '@angular/router';
 })
 export class ReportComponent implements OnInit {
 
-  total: HistorySecurity[];
+  total: IHistory[];
   loading = false;
 
   currentPage = 1;
@@ -85,7 +85,7 @@ export class ReportComponent implements OnInit {
   }
 
   makeSortedRequest() {
-    const options: Options =  {
+    const options: IOptions =  {
       sortField: this.mapTableHeaders.get(this.form.get('sortList').value),
       direction: this.form.get('directionList').value
     };
@@ -102,7 +102,7 @@ export class ReportComponent implements OnInit {
     date.setMinutes(date.getTimezoneOffset());
     console.log(date);
 
-    const options: Options =  {
+    const options: IOptions =  {
       sortField: this.mapTableHeaders.get(this.form.get('sortList').value),
       direction: this.form.get('directionList').value,
       filterDate: date
@@ -116,7 +116,7 @@ export class ReportComponent implements OnInit {
   }
 
   makeFilterTitle() {
-    const options: Options =  {
+    const options: IOptions =  {
       sortField: this.mapTableHeaders.get(this.form.get('sortList').value),
       direction: this.form.get('directionList').value,
       filterTitle: this.form.get('titleMask').value
