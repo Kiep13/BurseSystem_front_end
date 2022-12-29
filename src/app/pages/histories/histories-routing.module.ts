@@ -2,17 +2,17 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import {
-  HistoriesPageComponent,
-  HistoryCreatePageComponent,
+  HistoriesComponent,
+  HistoryFormComponent,
   HistoryEditPageComponent,
-  HistoryUploadPageComponent
+  HistoryUploadComponent
 } from './components';
 
 const routes: Routes = [
-  {path: '', component: HistoriesPageComponent},
-  {path: 'create', component: HistoryCreatePageComponent},
+  {path: '', component: HistoriesComponent},
+  {path: 'create', component: HistoryFormComponent},
   {path: 'edit/:id', component: HistoryEditPageComponent},
-  {path: 'upload', component: HistoryUploadPageComponent}
+  {path: 'upload', component: HistoryUploadComponent}
 ];
 
 @NgModule({

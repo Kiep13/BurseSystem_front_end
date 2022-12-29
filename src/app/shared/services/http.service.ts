@@ -7,8 +7,7 @@ import {History, HistorySecurity, Options, Security} from '../interfaces';
   providedIn: 'root'
 })
 export class HttpService {
-
-  baseUrl = `http://localhost:8080/`;
+  private baseUrl = `http://localhost:8080/`;
 
   constructor(private http: HttpClient) { }
 
