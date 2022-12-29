@@ -5,12 +5,12 @@ import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-total-page',
-  templateUrl: './total-page.component.html',
-  styleUrls: ['./total-page.component.scss'],
+  selector: 'app-report',
+  templateUrl: './report.component.html',
+  styleUrls: ['./report.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
 })
-export class TotalPageComponent implements OnInit {
+export class ReportComponent implements OnInit {
 
   total: HistorySecurity[];
   loading = false;

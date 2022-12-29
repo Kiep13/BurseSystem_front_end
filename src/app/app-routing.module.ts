@@ -1,7 +1,5 @@
-import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
-import {TotalPageComponent} from './components/totalpage/total-page.component';
+import { NgModule } from '@angular/core';
 
 const routes: Routes = [
   {
@@ -23,9 +21,15 @@ const routes: Routes = [
     loadChildren: () => {
       return import('./pages/securities/securities.module').then((m) => m.SecuritiesModule);
     },
-    title: 'Histories'
+    title: 'Securities'
   },
-  {path: 'total', component: TotalPageComponent},
+  {
+    path: 'total',
+    loadChildren: () => {
+      return import('./pages/report/report.module').then((m) => m.ReportModule);
+    },
+    title: 'Total'
+  },
   {
     path: 'error',
     loadChildren: () => {

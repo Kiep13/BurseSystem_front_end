@@ -8,7 +8,6 @@ import {HttpClientModule} from '@angular/common/http';
 import {FileInputValueDirective} from './shared/direcrives/file-input-value-accessor.directive';
 import { HeaderComponent } from './components/blocks/header/header.component';
 import { SpinnerComponent } from './components/blocks/spinner/spinner.component';
-import { TotalPageComponent } from './components/totalpage/total-page.component';
 import { PaginationPipe } from './shared/pipes/pagination.pipe';
 import { DateValueAccessorModule} from 'angular-date-value-accessor';
 import { YesNoPipe } from './shared/pipes/yes-no.pipe';
@@ -24,7 +23,6 @@ import { AlertService} from './shared/services/alert-service';
     FileInputValueDirective,
     HeaderComponent,
     SpinnerComponent,
-    TotalPageComponent,
     PaginationPipe,
     YesNoPipe,
     PaginationBlockComponent,
