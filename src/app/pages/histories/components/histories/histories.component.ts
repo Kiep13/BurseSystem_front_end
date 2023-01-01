@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
-import { EMPTY, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
+import { IHistory, IOptions, IPageContent } from '../../../../shared/interfaces';
 import { HttpService } from '../../../../shared/services';
-import { IHistory } from '../../../../shared/interfaces';
+import { HISTORIES_TABLE_COLUMNS } from '../../constants';
 
 @Component({
   selector: 'app-histories',
@@ -13,11 +14,13 @@ import { IHistory } from '../../../../shared/interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HistoriesComponent implements OnInit {
-  public histories: IHistory[] = [];
-  public loading = true;
+  public histories: BehaviorSubject<IHistory[]> = new BehaviorSubject<IHistory[]>([]);
+  public loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
   public amountPages: number;
   public currentPage = 1;
+
+  public readonly columns = HISTORIES_TABLE_COLUMNS;
 
   constructor(private httpService: HttpService,
               private router: Router) {
@@ -29,6 +32,7 @@ export class HistoriesComponent implements OnInit {
 
   public setPage(value: number): void {
     this.currentPage = value;
+    this.loadHistories();
   }
 
   public delete(id: number): void {
@@ -47,13 +51,19 @@ export class HistoriesComponent implements OnInit {
   }
 
   private loadHistories(): void {
-    this.httpService.getHistories()
+    this.loading.next(true);
+
+    const options: IOptions = {
+      page: this.currentPage
+    };
+
+    this.httpService.getHistories(options)
       .pipe(
         take(1),
-        tap((response: IHistory[]) => {
-          this.histories = response;
-          this.amountPages = Math.ceil(this.histories.length / 10);
-          this.loading = false;
+        tap((response: IPageContent<IHistory>) => {
+          this.histories.next(response.data);
+          this.amountPages = response.totalPages;
+          this.loading.next(false);
         }),
         catchError(() => {
           return this.handleError();

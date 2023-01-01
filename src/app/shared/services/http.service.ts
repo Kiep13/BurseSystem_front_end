@@ -1,22 +1,26 @@
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import queryString from 'query-string';
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
-import {IHistory, IOptions, ISecurity} from '../interfaces';
+import { IHistory, IOptions, IPageContent, ISecurity } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
-  private baseUrl = `http://localhost:8080/`;
+  private baseUrl = `https://0f61c2d3-b558-475c-8aba-727a311039e1.mock.pstmn.io/`;
 
-  constructor(private http: HttpClient) { }
-
-  public getHistories(): Observable<IHistory[]>  {
-    return this.http.get<IHistory[]>(this.baseUrl + 'histories');
+  constructor(private http: HttpClient) {
   }
 
-  public getHistoryById(id: number): Observable<IHistory>  {
+  public getHistories(options: IOptions): Observable<IPageContent<IHistory>> {
+    const query = queryString.stringify(options);
+
+    return this.http.get<IPageContent<IHistory>>(this.baseUrl + `histories/?${query}`);
+  }
+
+  public getHistoryById(id: number): Observable<IHistory> {
     return this.http.get<IHistory>(this.baseUrl + `getHistory/${id}`);
   }
 
@@ -36,11 +40,11 @@ export class HttpService {
     return this.http.delete<any>(this.baseUrl + `deleteHistory/${id}`);
   }
 
-  public getSecurities(): Observable<ISecurity[]>  {
+  public getSecurities(): Observable<ISecurity[]> {
     return this.http.get<ISecurity[]>(this.baseUrl + 'securities');
   }
 
-  public getSecurityById(id: number): Observable<ISecurity>  {
+  public getSecurityById(id: number): Observable<ISecurity> {
     return this.http.get<ISecurity>(this.baseUrl + `getSecurity/${id}`);
   }
 

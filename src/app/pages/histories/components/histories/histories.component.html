@@ -1,4 +1,4 @@
-<div *ngIf="!loading; else loadingIcon">
+<div *ngIf="!(loading| async); else loadingIcon">
   <div class="ml-4 mr-5 header">
     <h2 class="d-inline-block header-title">Histories</h2>
 
@@ -15,55 +15,24 @@
     </div>
   </div>
 
-  <div *ngIf="histories.length != 0; else noDataBlock">
+  <div *ngIf="(histories | async).length != 0; else noDataBlock">
     <table class="table table-hover table-responsive mt-2" >
       <thead>
       <tr class="fixed-header">
-        <th>Code of trad.mode</th>
-        <th>Trade date</th>
-        <th>Short name</th>
-        <th>Secid</th>
-        <th>Number of trades</th>
-        <th>Value</th>
-        <th>Starting price</th>
-        <th>Minimum price</th>
-        <th>Maximum price</th>
-        <th>Closing price</th>
-        <th>Weighted average price</th>
-        <th>Price for the last transaction</th>
-        <th>Volume of securities</th>
-        <th>Market price №2</th>
-        <th>Market price №3</th>
-        <th>Admitted quite</th>
-        <th>Market price №2 trade value</th>
-        <th>Market price №3 trade value</th>
-        <th>Admitted value</th>
-        <th>Weighted average value</th>
+        <ng-container *ngFor='let column of columns'>
+          <th>{{ column.title }}</th>
+        </ng-container>
         <th>____________</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let history of histories | paginationPipe: currentPage">
-        <td>{{ history.boardid }}</td>
-        <td>{{ history.tradedate | date:'dd.MM.yyyy' }}</td>
-        <td>{{ history.shortName }}</td>
-        <td>{{ history.secid }}</td>
-        <td>{{ history.numTrades }}</td>
-        <td>{{ history.value }}</td>
-        <td>{{ history.open }}</td>
-        <td>{{ history.low }}</td>
-        <td>{{ history.high }}</td>
-        <td>{{ history.legalClosePrice }}</td>
-        <td>{{ history.waprice }}</td>
-        <td>{{ history.close }}</td>
-        <td>{{ history.volume }}</td>
-        <td>{{ history.marketPrice2 }}</td>
-        <td>{{ history.marketPrice3 }}</td>
-        <td>{{ history.admittedQuite }}</td>
-        <td>{{ history.mp2ValTrd }}</td>
-        <td>{{ history.marketPrice3TradeValue }}</td>
-        <td>{{ history.admittedValue }}</td>
-        <td>{{ history.waVal }}</td>
+      <tr *ngFor="let history of (histories | async)">
+        <ng-container *ngFor='let column of columns'>
+          <ng-container [ngSwitch]='column.formatter'>
+            <td *ngSwitchCase='"date"'>{{ history[column.name] | date : column.extraForFormatter }}</td>
+            <td *ngSwitchDefault>{{ history[column.name] }}</td>
+          </ng-container>
+        </ng-container>
         <td>
           <div class="controls">
             <button class="btn btn-sm btn-outline-danger float-right my-1 item-control d-inline"
@@ -88,11 +57,10 @@
   </div>
 </div>
 
-
 <ng-template #loadingIcon>
   <app-spinner></app-spinner>
 </ng-template>
 
 <ng-template #noDataBlock>
-    <app-no-data-block></app-no-data-block>
+  <app-no-data-block></app-no-data-block>
 </ng-template>
