@@ -7,7 +7,6 @@ import { HistoriesRoutingModule } from './histories-routing.module';
 import {
   HistoriesComponent,
   HistoryFormComponent,
-  HistoryEditPageComponent,
   HistoryUploadComponent
 } from './components';
 
@@ -15,7 +14,6 @@ import {
   declarations: [
     HistoriesComponent,
     HistoryFormComponent,
-    HistoryEditPageComponent,
     HistoryUploadComponent
   ],
   imports: [

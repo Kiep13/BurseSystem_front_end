@@ -1,12 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { catchError, take, tap } from 'rxjs/operators';
-import { BehaviorSubject, EMPTY } from 'rxjs';
-import { Router } from '@angular/router';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { AlertService, HttpService } from '../../../../shared/services';
 import { FormValidators } from '../../../../shared/validators';
 import { IHistory } from '../../../../shared/interfaces';
+import { FORM_CREATE_TITLE, FORM_EDIT_TITLE } from '../../constants/form-titles';
 
 @Component({
   selector: 'app-history-form',
@@ -14,10 +15,10 @@ import { IHistory } from '../../../../shared/interfaces';
   styleUrls: ['./history-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HistoryFormComponent {
+export class HistoryFormComponent implements OnInit {
   public form: UntypedFormGroup = new UntypedFormGroup({
     boardid: new UntypedFormControl('', [Validators.required]),
-    tradedate: new UntypedFormControl('', [Validators.required]),
+    tradedate: new FormControl<Date>(null, [Validators.required]),
     shortName: new UntypedFormControl('', [Validators.required]),
     secid: new UntypedFormControl('', [Validators.required]),
     numTrades: new UntypedFormControl('',
@@ -53,11 +54,37 @@ export class HistoryFormComponent {
     waVal: new UntypedFormControl('',
       [FormValidators.negativeNumber])
   });
-  public submitted: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private httpService: HttpService,
-              private router: Router,
-              private alert: AlertService) {
+  public isEditMode = false;
+  public editedHistory: IHistory;
+
+  public submitted: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
+  public get formTitle(): string {
+    return this.isEditMode ? FORM_EDIT_TITLE : FORM_CREATE_TITLE;
+  }
+
+  constructor(private activatedRoute: ActivatedRoute,
+              private httpService: HttpService,
+              private alert: AlertService,
+              private router: Router) {
+  }
+
+  public ngOnInit(): void {
+    this.activatedRoute.params
+      .pipe(
+        take(1),
+        tap((params: Params) => {
+          if (params.id) {
+            this.prepareEditMode(params.id);
+            return;
+          }
+
+          this.loading.next(false);
+        })
+      )
+      .subscribe();
   }
 
   public submit(): void {
@@ -69,14 +96,14 @@ export class HistoryFormComponent {
 
     const date = new Date(this.form.get('tradedate').value);
     date.setMinutes(date.getTimezoneOffset());
-    console.log(date);
 
     const history: IHistory = {
+      ...(this.isEditMode ? this.editedHistory : {}),
       ...this.form.getRawValue(),
       tradedate: date,
     };
 
-    this.httpService.addHistory(history)
+    this.getActionForSubmit()(history)
       .pipe(
         take(1),
         tap(() => {
@@ -85,11 +112,43 @@ export class HistoryFormComponent {
           this.submitted.next(false);
         }),
         catchError(() => {
-          this.alert.danger('Error when trying to add the history');
-          this.submitted.next(false);
+          return this.handleError('Error when trying to add the history');
+        })
+      )
+      .subscribe();
+  }
+
+  private prepareEditMode(id: number): void {
+    this.isEditMode = true;
+
+    this.httpService.getHistory(id)
+      .pipe(
+        take(1),
+        tap((history: IHistory) => {
+          this.editedHistory = history;
+
+          this.form.patchValue(history);
+          this.form.get('tradedate').setValue(new Date(history.tradedate));
+
+          console.log(history.tradedate, this.form.get('tradedate').value);
+
+          this.loading.next(false);
+        }),
+        catchError(() => {
+          this.router.navigate(['/error']);
           return EMPTY;
         })
       )
       .subscribe();
+  }
+
+  private handleError(message: string): Observable<never> {
+    this.alert.danger(message);
+    this.submitted.next(false);
+    return EMPTY;
+  }
+
+  private getActionForSubmit(): (history: IHistory) => Observable<IHistory> {
+    return this.isEditMode ? this.httpService.editHistory : this.httpService.addHistory;
   }
 }

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { EMPTY } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
 
 import { AlertService, HttpService } from '../../../../shared/services';
 

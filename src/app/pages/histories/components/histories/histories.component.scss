@@ -1,6 +1,7 @@
 .controls {
-
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
 
   .item-control {
     height: 35px;

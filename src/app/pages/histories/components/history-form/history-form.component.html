@@ -3,7 +3,7 @@
 </div>
 
 <div class="card create-form">
-  <h2 class="ml-3 mt-3">Creating a history record</h2>
+  <h2 class="ml-3 mt-3">{{ formTitle }}</h2>
   <form [formGroup]="form" (ngSubmit)="submit()">
 
     <div class="row ml-3 mr-3">
@@ -18,7 +18,7 @@
 
       <div class="form-group col-md">
         <label for="tradedate">Transaction date</label>
-        <input id="tradedate" type="date" name="tradedate" class="form-control" formControlName="tradedate">
+        <input id="tradedate" type="date" class="form-control" formControlName="tradedate" value=''>
         <div class="validation" *ngIf="form.get('tradedate').touched && form.get('tradedate').invalid">
           <small *ngIf="form.get('tradedate').errors.required">Invalid trade date.</small>
         </div>

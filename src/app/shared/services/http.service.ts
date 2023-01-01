@@ -20,8 +20,8 @@ export class HttpService {
     return this.http.get<IPageContent<IHistory>>(this.baseUrl + `histories/?${query}`);
   }
 
-  public getHistoryById(id: number): Observable<IHistory> {
-    return this.http.get<IHistory>(this.baseUrl + `getHistory/${id}`);
+  public getHistory(id: number): Observable<IHistory> {
+    return this.http.get<IHistory>(this.baseUrl + `history/${id}`);
   }
 
   public uploadHistory(data: FormData): Observable<any> {
