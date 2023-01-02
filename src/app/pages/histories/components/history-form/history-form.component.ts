@@ -1,13 +1,19 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { catchError, take, tap } from 'rxjs/operators';
-import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { catchError, take, tap } from 'rxjs/operators';
 
 import { AlertService, HttpService } from '../../../../shared/services';
 import { FormValidators } from '../../../../shared/validators';
 import { IHistory } from '../../../../shared/interfaces';
-import { FORM_CREATE_TITLE, FORM_EDIT_TITLE } from '../../constants/form-titles';
+import {
+  FORM_CREATE_TITLE,
+  FORM_EDIT_TITLE,
+  ERROR_CREATE_HISTORY_MESSAGE,
+  ERROR_UPDATE_HISTORY_MESSAGE,
+  SUCCESS_ADD_HISTORY_MESSAGE, SUCCESS_UPDATE_HISTORY_MESSAGE
+} from '../../constants';
 
 @Component({
   selector: 'app-history-form',
@@ -18,7 +24,7 @@ import { FORM_CREATE_TITLE, FORM_EDIT_TITLE } from '../../constants/form-titles'
 export class HistoryFormComponent implements OnInit {
   public form: UntypedFormGroup = new UntypedFormGroup({
     boardid: new UntypedFormControl('', [Validators.required]),
-    tradedate: new FormControl<Date>(null, [Validators.required]),
+    tradedate: new FormControl<Date>(new Date(), [Validators.required]),
     shortName: new UntypedFormControl('', [Validators.required]),
     secid: new UntypedFormControl('', [Validators.required]),
     numTrades: new UntypedFormControl('',
@@ -100,19 +106,21 @@ export class HistoryFormComponent implements OnInit {
     const history: IHistory = {
       ...(this.isEditMode ? this.editedHistory : {}),
       ...this.form.getRawValue(),
-      tradedate: date,
+      tradedate: date
     };
 
     this.getActionForSubmit()(history)
       .pipe(
         take(1),
         tap(() => {
-          this.alert.success('The history was added successfully');
+          const message = this.isEditMode ? SUCCESS_UPDATE_HISTORY_MESSAGE : SUCCESS_ADD_HISTORY_MESSAGE;
+          this.alert.success(message);
           this.router.navigate(['/histories']);
           this.submitted.next(false);
         }),
         catchError(() => {
-          return this.handleError('Error when trying to add the history');
+          const message = this.isEditMode ? ERROR_UPDATE_HISTORY_MESSAGE : ERROR_CREATE_HISTORY_MESSAGE;
+          return this.handleError(message);
         })
       )
       .subscribe();
@@ -128,9 +136,9 @@ export class HistoryFormComponent implements OnInit {
           this.editedHistory = history;
 
           this.form.patchValue(history);
-          this.form.get('tradedate').setValue(new Date(history.tradedate));
 
-          console.log(history.tradedate, this.form.get('tradedate').value);
+          const tradeDate = new Date(history.tradedate);
+          this.form.get('tradedate').setValue(`${tradeDate.getFullYear()}-${tradeDate.getMonth()}-${tradeDate.getDate()}`);
 
           this.loading.next(false);
         }),
