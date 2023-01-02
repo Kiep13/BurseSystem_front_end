@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 
 import {
   SecuritiesComponent,
-  SecurityCreatePageComponent,
+  SecurityFormComponent,
   SecurityEditPageComponent,
   SecurityUploadPageComponent
 } from './components';
 
 const routes: Routes = [
   {path: '', component: SecuritiesComponent},
-  {path: 'create', component: SecurityCreatePageComponent},
+  {path: 'create', component: SecurityFormComponent},
   {path: 'edit/:id', component: SecurityEditPageComponent},
   {path: 'upload', component: SecurityUploadPageComponent}
 ];

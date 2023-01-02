@@ -6,7 +6,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { SecuritiesRoutingModule } from './securities-routing.module';
 import {
   SecuritiesComponent,
-  SecurityCreatePageComponent,
+  SecurityFormComponent,
   SecurityEditPageComponent,
   SecurityUploadPageComponent
 } from './components';
@@ -14,7 +14,7 @@ import {
 @NgModule({
   declarations: [
     SecuritiesComponent,
-    SecurityCreatePageComponent,
+    SecurityFormComponent,
     SecurityEditPageComponent,
     SecurityUploadPageComponent
   ],
