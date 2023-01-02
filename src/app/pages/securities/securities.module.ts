@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 import { SecuritiesRoutingModule } from './securities-routing.module';
 import {
-  SecuritiesPageComponent,
+  SecuritiesComponent,
   SecurityCreatePageComponent,
   SecurityEditPageComponent,
   SecurityUploadPageComponent
@@ -13,7 +13,7 @@ import {
 
 @NgModule({
   declarations: [
-    SecuritiesPageComponent,
+    SecuritiesComponent,
     SecurityCreatePageComponent,
     SecurityEditPageComponent,
     SecurityUploadPageComponent

@@ -1,3 +1,4 @@
 export enum TableFormatters {
-  Date = 'date'
+  Date = 'date',
+  Boolean = 'boolean'
 }

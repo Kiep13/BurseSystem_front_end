@@ -40,8 +40,10 @@ export class HttpService {
     return this.http.delete<any>(this.baseUrl + `deleteHistory/${id}`);
   }
 
-  public getSecurities(): Observable<ISecurity[]> {
-    return this.http.get<ISecurity[]>(this.baseUrl + 'securities');
+  public getSecurities(options: IOptions): Observable<IPageContent<ISecurity>> {
+    const query = queryString.stringify(options);
+
+    return this.http.get<IPageContent<ISecurity>>(this.baseUrl + `securities/?${query}`);
   }
 
   public getSecurityById(id: number): Observable<ISecurity> {
