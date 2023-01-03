@@ -2,11 +2,19 @@ import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { AlertService, HttpService } from '../../../../shared/services';
 import { FormValidators } from '../../../../shared/validators';
-import { ISecurity } from '../../../../shared/interfaces';
+import { IHistory, ISecurity } from '../../../../shared/interfaces';
+import {
+  ERROR_CREATE_SECURITY_MESSAGE,
+  ERROR_UPDATE_SECURITY_MESSAGE,
+  FORM_CREATE_TITLE,
+  FORM_EDIT_TITLE,
+  SUCCESS_ADD_SECURITY_MESSAGE,
+  SUCCESS_UPDATE_SECURITY_MESSAGE
+} from '../../constants';
 
 @Component({
   selector: 'app-security-form',
@@ -32,15 +40,37 @@ export class SecurityFormComponent implements OnInit {
     primaryBoarDid: new UntypedFormControl('', [Validators.required]),
     marketPriceBoarDid: new UntypedFormControl('', [Validators.required])
   });
-  public submitted: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private httpService: HttpService,
+  public isEditMode = false;
+  public editedSecurity: ISecurity;
+
+  public submitted: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
+  public get formTitle(): string {
+    return this.isEditMode ? FORM_EDIT_TITLE : FORM_CREATE_TITLE;
+  }
+
+  constructor(private activatedRoute: ActivatedRoute,
+              private httpService: HttpService,
               private router: Router,
               private alert: AlertService) {
   }
 
   public ngOnInit(): void {
+    this.activatedRoute.params
+      .pipe(
+        take(1),
+        tap((params: Params) => {
+          if (params.id) {
+            this.prepareEditMode(params.id);
+            return;
+          }
 
+          this.loading.next(false);
+        })
+      )
+      .subscribe();
   }
 
   public submit(): void {
@@ -51,18 +81,41 @@ export class SecurityFormComponent implements OnInit {
     this.submitted.next(true);
 
     const security: ISecurity = {
+      ...(this.isEditMode ? this.editedSecurity : {}),
       ...this.form.getRawValue()
     };
 
-    this.httpService.addSecurity(security)
+    this.getActionForSubmit()(security)
       .pipe(
         take(1),
         tap(() => {
-          this.alert.success('The security was added successfully');
+          const message = this.isEditMode ? SUCCESS_UPDATE_SECURITY_MESSAGE : SUCCESS_ADD_SECURITY_MESSAGE;
+          this.alert.success(message);
           this.router.navigate(['/securities']);
         }),
         catchError(() => {
-          return this.handleError('Error when trying to add the security');
+          const message = this.isEditMode ? ERROR_UPDATE_SECURITY_MESSAGE : ERROR_CREATE_SECURITY_MESSAGE;
+          return this.handleError(message);
+        })
+      )
+      .subscribe();
+  }
+
+  private prepareEditMode(id: number): void {
+    this.isEditMode = true;
+
+    this.httpService.getSecurity(id)
+      .pipe(
+        take(1),
+        tap((security: ISecurity) => {
+          this.editedSecurity = security;
+          this.form.patchValue(security);
+
+          this.loading.next(false);
+        }),
+        catchError(() => {
+          this.router.navigate(['/error']);
+          return EMPTY;
         })
       )
       .subscribe();
@@ -71,5 +124,9 @@ export class SecurityFormComponent implements OnInit {
   private handleError(message: string): Observable<never> {
     this.alert.danger(message);
     return EMPTY;
+  }
+
+  private getActionForSubmit(): (security: ISecurity) => Observable<ISecurity> {
+    return this.isEditMode ? this.httpService.editSecurity : this.httpService.addSecurity;
   }
 }

@@ -7,16 +7,14 @@ import { SecuritiesRoutingModule } from './securities-routing.module';
 import {
   SecuritiesComponent,
   SecurityFormComponent,
-  SecurityEditPageComponent,
-  SecurityUploadPageComponent
+  SecurityUploadComponent
 } from './components';
 
 @NgModule({
   declarations: [
     SecuritiesComponent,
     SecurityFormComponent,
-    SecurityEditPageComponent,
-    SecurityUploadPageComponent
+    SecurityUploadComponent
   ],
   imports: [
     CommonModule,

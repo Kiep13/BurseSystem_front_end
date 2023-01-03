@@ -46,8 +46,8 @@ export class HttpService {
     return this.http.get<IPageContent<ISecurity>>(this.baseUrl + `securities/?${query}`);
   }
 
-  public getSecurityById(id: number): Observable<ISecurity> {
-    return this.http.get<ISecurity>(this.baseUrl + `getSecurity/${id}`);
+  public getSecurity(id: number): Observable<ISecurity> {
+    return this.http.get<ISecurity>(this.baseUrl + `security/${id}`);
   }
 
   public uploadSecurity(data: FormData): Observable<any> {
