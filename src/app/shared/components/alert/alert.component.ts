@@ -1,39 +1,55 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {AlertService} from '../../services/alert-service';
-import {Subscription} from 'rxjs';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+
+import { DEFAULT_ALERT_DELAY } from '../../constants';
+import { AlertTypes } from '../../enums';
+import { IAlert } from '../../interfaces';
+import { AlertService } from '../../services';
 
 @Component({
   selector: 'app-alert',
   templateUrl: './alert.component.html',
-  styleUrls: ['./alert.component.scss']
+  styleUrls: ['./alert.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlertComponent implements OnInit, OnDestroy {
-
-  @Input() delay = 5000;
+  @Input() public delay = DEFAULT_ALERT_DELAY;
 
   public text: string;
-  public type = 'success';
+  public type: AlertTypes;
 
-  aSub: Subscription;
+  private subscription: Subscription;
 
-  constructor(private alertService: AlertService) { }
+  public get solvedClass(): Record<string, boolean> {
+    return {
+      'alert-success': this.type === AlertTypes.Success,
+      'alert-warning': this.type === AlertTypes.Warning,
+      'alert-danger': this.type === AlertTypes.Danger,
+    };
+  }
 
-  ngOnInit(): void {
-    this.aSub = this.alertService.alert$.subscribe( alert => {
+  constructor(private alertService: AlertService,
+              private changeDetector: ChangeDetectorRef) {
+  }
+
+  public ngOnInit(): void {
+    this.subscription = this.alertService.alert$.subscribe((alert: IAlert) => {
       this.text = alert.text;
       this.type = alert.type;
+      this.changeDetector.detectChanges();
 
       const timeout = setTimeout(() => {
-        clearTimeout(timeout);
         this.text = '';
+        this.changeDetector.detectChanges();
+
+        clearTimeout(timeout);
       }, this.delay);
     });
   }
 
-  ngOnDestroy(): void {
-    if (this.aSub) {
-      this.aSub.unsubscribe();
+  public ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
-
 }

@@ -1,25 +1,19 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-pagination-block',
   templateUrl: './pagination-block.component.html',
-  styleUrls: ['./pagination-block.component.scss']
+  styleUrls: ['./pagination-block.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PaginationBlockComponent implements OnInit {
+export class PaginationBlockComponent {
+  @Input() public currentPage: number;
+  @Input() public amountPages: number;
 
-  @Input() currentPage: number;
-  @Input() amountPages: number;
+  @Output() public selectedPage: EventEmitter<number> = new EventEmitter<number>();
 
-  @Output() onPage: EventEmitter<number> =  new EventEmitter<number>();
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-  setPage(value: number) {
+  public setPage(value: number): void {
     this.currentPage = value;
-    this.onPage.emit(this.currentPage);
+    this.selectedPage.emit(this.currentPage);
   }
-
 }
