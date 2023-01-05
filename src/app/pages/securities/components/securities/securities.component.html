@@ -1,23 +1,23 @@
-<div *ngIf="!(loading | async); else loadingIcon">
-  <div class="ml-4 mr-5 header">
-    <h2 class="d-inline-block header-title">Securities</h2>
+<div *ngIf='!(loading | async); else loadingIcon'>
+  <div class='ml-4 mr-5 header'>
+    <h2 class='d-inline-block header-title'>Securities</h2>
 
-    <div class="controls header-controls">
-      <button class="btn btn-sm btn-outline-primary float-right my-1 item-control d-inline"
+    <div class='controls header-controls'>
+      <button class='btn btn-sm btn-outline-primary float-right my-1 item-control d-inline'
               [routerLink]="['','securities', 'upload']">
-        <i class="fa fa-lg fa-upload"></i>
+        <i class='fa fa-lg fa-upload'></i>
       </button>
 
-      <button class="btn btn-sm btn-outline-success float-right my-1 mr-2 item-control d-inline"
+      <button class='btn btn-sm btn-outline-success float-right my-1 mr-2 item-control d-inline'
               [routerLink]="['', 'securities', 'create']">
-        <i class="fa fa-lg fa-plus"></i>
+        <i class='fa fa-lg fa-plus'></i>
       </button>
     </div>
   </div>
 
-  <div *ngIf="(securities | async).length != 0; else noDataBlock">
-    <table class="table table-hover table-responsive mt-2" >
-      <thead>
+  <div *ngIf='(securities | async).length != 0; else noDataBlock'>
+    <table class='table table-hover table-responsive mt-2'>
+      <thead class='w-100'>
       <tr>
         <ng-container *ngFor='let column of columns'>
           <th>{{ column.title }}</th>
@@ -26,7 +26,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let security of (securities | async)">
+      <tr *ngFor='let security of (securities | async)'>
         <ng-container *ngFor='let column of columns'>
           <ng-container [ngSwitch]='column.formatter'>
             <td *ngSwitchCase='"boolean"'>{{ security[column.name] | yesNo }}</td>
@@ -35,15 +35,15 @@
         </ng-container>
 
         <td>
-          <div class="controls">
-            <button class="btn btn-sm btn-outline-warning float-right my-1 mr-2 item-control d-inline"
+          <div class='controls'>
+            <button class='btn btn-sm btn-outline-warning float-right my-1 mr-2 item-control d-inline'
                     [routerLink]="['/', 'securities', 'edit',security.id]">
-              <i class="fa fa-lg fa-pencil"></i>
+              <i class='fa fa-lg fa-pencil'></i>
             </button>
 
-            <button class="btn btn-sm btn-outline-danger float-right my-1 item-control d-inline"
-                    (click)="delete(security.id)">
-              <i class="fa fa-lg fa-trash-o"></i>
+            <button class='btn btn-sm btn-outline-danger float-right my-1 item-control d-inline'
+                    (click)='delete(security.id)'>
+              <i class='fa fa-lg fa-trash-o'></i>
             </button>
           </div>
         </td>
@@ -51,9 +51,9 @@
       </tbody>
     </table>
 
-    <app-pagination-block [currentPage]="currentPage"
-                          [amountPages]="amountPages"
-                          (selectedPage)="setPage($event)">
+    <app-pagination-block [currentPage]='currentPage'
+                          [amountPages]='amountPages'
+                          (selectedPage)='setPage($event)'>
     </app-pagination-block>
   </div>
 </div>

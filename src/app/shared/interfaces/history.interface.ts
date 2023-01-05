@@ -23,4 +23,8 @@ export interface IHistory {
   admittedValue: number;
   waVal: number;
   security?: ISecurity;
+
+  regNumber__security_c: string;
+  name__security_c: string;
+  emitentTitle__security_c: string;
 }

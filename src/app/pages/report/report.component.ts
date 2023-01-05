@@ -1,79 +1,71 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {IHistory, IOptions} from '../../shared/interfaces';
-import {HttpService} from '../../shared/services/http.service';
-import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { catchError, map, take, tap } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { Router } from '@angular/router';
+
+import { IColumn, IHistory, IOptions, IPageContent, ISortRule } from '../../shared/interfaces';
+import { HttpService } from '../../shared/services';
+import { SortDirections } from '../../shared/enums';
+import { REPORT_TABLE_COLUMNS } from './constants';
 
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class ReportComponent implements OnInit {
+  public histories: BehaviorSubject<IHistory[]> = new BehaviorSubject<IHistory[]>([]);
+  public loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
-  total: IHistory[];
-  loading = false;
+  public amountPages: number;
+  public currentPage = 1;
+  public sortRule: ISortRule = {
+    columnName: REPORT_TABLE_COLUMNS[0].name,
+    direction: SortDirections.Increase
+  };
 
-  currentPage = 1;
-  amountPages: number;
+  public form: UntypedFormGroup = new UntypedFormGroup({
+    dateMask: new UntypedFormControl(''),
+    titleMask: new UntypedFormControl('', Validators.required)
+  });
 
-  form: UntypedFormGroup;
-  tableHeaders = ['Secid', 'Registration number', 'Name', 'Emitent title', 'Trade date',
-    'Number of trades', 'Starting price', 'Price for the last transaction'];
-
-  mapTableHeaders = new Map([
-    ['None', 'id'],
-    ['Secid', 'secid'],
-    ['Registration number', 'security.regNumber'],
-    ['Name', 'security.name'],
-    ['Emitent title', 'security.emitentTitle'],
-    ['Trade date', 'tradedate'],
-    ['Number of trades', 'numTrades'],
-    ['Starting price', 'open'],
-    ['Price for the last transaction', 'close']
-  ]);
-
+  public readonly columns: IColumn[] = REPORT_TABLE_COLUMNS;
+  public readonly sortDirections = SortDirections;
 
   constructor(private httpService: HttpService,
               private router: Router) {
-
-    this.form = new UntypedFormGroup({
-      sortList: new UntypedFormControl('None'),
-      directionList: new UntypedFormControl('inc'),
-      filterList: new UntypedFormControl('no filter'),
-      dateMask: new UntypedFormControl(''),
-      titleMask: new UntypedFormControl('', Validators.required)
-    });
   }
 
-  ngOnInit(): void {
-    this.loading = true;
-    this.httpService.getTotalStatement()
-      .subscribe(response => {
-        this.total = response;
-        this.amountPages = Math.ceil(this.total.length / 10);
-        this.loading = false;
-      }, () => {
-        this.router.navigate(['/error']);
-      });
+  public ngOnInit(): void {
+    this.loadData();
   }
 
-  setPage(value: number) {
+  public setPage(value: number): void {
     this.currentPage = value;
+    this.loadData();
   }
 
-  setSortField() {
-    switch (this.form.get('filterList').value) {
-      case 'no filter': this.makeSortedRequest(); break;
-      case 'emitentTitle': this.makeFilterTitle(); break;
-      case 'tradedate': this.makeFilterData(); break;
-    }
+  public handleSortChange(column: IColumn): void {
+    this.sortRule = {
+      columnName: column.name,
+      direction: column.name === this.sortRule.columnName ?
+        this.sortRule.direction === SortDirections.Decrease ?
+          SortDirections.Increase : SortDirections.Decrease
+        : SortDirections.Increase
+    };
+
+    this.loadData();
   }
 
-  setFilterType() {
+  public setSortField(): void {
+    this.loadData();
+  }
+
+  public setFilterType(): void {
     if (this.form.get('filterList').value === 'no filter') {
-      this.makeSortedRequest();
+      this.loadData();
       this.form.get('dateMask').reset();
       this.form.get('titleMask').reset();
       return;
@@ -84,50 +76,53 @@ export class ReportComponent implements OnInit {
     }
   }
 
-  makeSortedRequest() {
-    const options: IOptions =  {
-      sortField: this.mapTableHeaders.get(this.form.get('sortList').value),
-      direction: this.form.get('directionList').value
-    };
+  private loadData(): void {
+    this.loading.next(true);
 
-    this.httpService.getSortedTotal(options)
-      .subscribe(response => {
-        this.total = response;
-        this.amountPages = Math.ceil(this.total.length / 10);
-      });
-  }
-
-  makeFilterData() {
     const date = new Date(this.form.get('dateMask').value);
     date.setMinutes(date.getTimezoneOffset());
-    console.log(date);
 
-    const options: IOptions =  {
-      sortField: this.mapTableHeaders.get(this.form.get('sortList').value),
-      direction: this.form.get('directionList').value,
-      filterDate: date
+    const filterTitle = this.form.get('titleMask').value;
+
+    const options: IOptions = {
+      sortField: this.sortRule.columnName,
+      direction: this.sortRule.direction,
+      page: this.currentPage,
+      ...(date ? {filterDate: date} : {}),
+      ...(filterTitle ? {filterTitle} : {})
     };
 
-    this.httpService.getFilteredByDataTotal(options)
-      .subscribe(response => {
-        this.total = response;
-        this.amountPages = Math.ceil(this.total.length / 10);
-      });
+    this.httpService.getHistories(options)
+      .pipe(
+        take(1),
+        map((response: IPageContent<IHistory>) => {
+          return {
+            ...response,
+            data: response.data.map((history: IHistory) => {
+              return {
+                ...history,
+                regNumber__security_c: history.security.regNumber,
+                name__security_c: history.security.name,
+                emitentTitle__security_c: history.security.emitentTitle
+              };
+            })
+          };
+        }),
+        tap((response: IPageContent<IHistory>) => {
+          this.histories.next(response.data);
+          this.amountPages = response.totalPages;
+
+          this.loading.next(false);
+        }),
+        catchError(() => {
+          return this.handleError();
+        })
+      )
+      .subscribe();
   }
 
-  makeFilterTitle() {
-    const options: IOptions =  {
-      sortField: this.mapTableHeaders.get(this.form.get('sortList').value),
-      direction: this.form.get('directionList').value,
-      filterTitle: this.form.get('titleMask').value
-    };
-
-    this.httpService.getFilteredByTitleTotal(options)
-      .subscribe(response => {
-        this.total = response;
-        this.amountPages = Math.ceil(this.total.length / 10);
-      }, () => {
-        this.router.navigate(['/error']);
-      });
+  private handleError(): Observable<never> {
+    this.router.navigate(['/error']);
+    return EMPTY;
   }
 }

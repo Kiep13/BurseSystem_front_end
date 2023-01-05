@@ -66,10 +66,6 @@ export class HttpService {
     return this.http.delete<any>(this.baseUrl + `deleteSecurity/${id}`);
   }
 
-  public getTotalStatement(): Observable<IHistory[]> {
-    return this.http.get<IHistory[]>(this.baseUrl + 'histories');
-  }
-
   public getSortedTotal(options: IOptions): Observable<IHistory[]> {
     return this.http.post<IHistory[]>(this.baseUrl + 'sortedHistories', options);
   }

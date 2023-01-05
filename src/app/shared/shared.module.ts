@@ -11,10 +11,7 @@ import {
   SpinnerComponent
 } from './components';
 import { FileInputValueDirective } from './direcrives';
-import {
-  YesNoPipe,
-  PaginationPipe
-} from './pipes';
+import { YesNoPipe } from './pipes';
 
 const COMPONENTS = [
   AlertComponent,
@@ -28,8 +25,7 @@ const COMPONENTS = [
 const DIRECTIVES = [ FileInputValueDirective ];
 
 const PIPES = [
-  YesNoPipe,
-  PaginationPipe
+  YesNoPipe
 ];
 
 @NgModule({

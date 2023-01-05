@@ -4,3 +4,4 @@ export * from './history.interface';
 export * from './options.interface';
 export * from './page-content.interface';
 export * from './security.interface';
+export * from './sort-rule.interface';

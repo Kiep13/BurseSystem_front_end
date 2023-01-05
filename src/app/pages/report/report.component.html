@@ -1,16 +1,6 @@
-<div *ngIf="!loading; else loadingIcon">
+<div *ngIf="!(loading | async); else loadingIcon">
   <div class="ml-4 mr-5 header">
     <h2 class="d-inline-block header-title">Total</h2>
-
-<!--    <div class="controls header-controls">-->
-<!--      <button class="btn btn-sm btn-outline-primary float-right my-1 item-control d-inline">-->
-<!--        <i class="fa fa-lg fa-upload"></i>-->
-<!--      </button>-->
-
-<!--      <button class="btn btn-sm btn-outline-success float-right my-1 mr-2 item-control d-inline">-->
-<!--        <i class="fa fa-lg fa-plus"></i>-->
-<!--      </button>-->
-<!--    </div>-->
   </div>
 
   <div>
@@ -18,47 +8,21 @@
     <div class="ml-4 mr-5 mt-3 header">
 
       <form [formGroup]="form">
-        <p class="d-inline-block header-title">Sort field</p>
-
-        <div class="d-inline-block ml-2">
-          <select class="form-control" (select)="setSortField()" formControlName="sortList" (click)="setSortField()">
-            <option value="None">None</option>
-            <option *ngFor="let tableHeader of tableHeaders"
-                    value="{{tableHeader}}" >{{tableHeader}}</option>
-          </select>
-        </div>
-
-        <p class="d-inline-block header-title ml-2">Direction</p>
-
-        <div class="d-inline-block ml-2">
-          <select class="form-control" formControlName="directionList" (click)="setSortField()">
-            <option value="inc">Increase</option>
-            <option value="dec">Decrease</option>
-          </select>
-        </div>
 
         <p class="d-inline-block header-title ml-2">Filter field</p>
 
         <div class="d-inline-block ml-2">
-          <select class="form-control" formControlName="filterList" (click)="setFilterType()">
-            <option value="no filter">No filter</option>
-            <option value="emitentTitle">Emitent title</option>
-            <option value="tradedate">Trade date</option>
-          </select>
-        </div>
-
-        <div class="d-inline-block ml-2" *ngIf="form.get('filterList').value == 'emitentTitle'">
           <p class="d-inline-block header-title">Title mask</p>
           <div class="d-inline-block ml-2" >
-            <input id="titleMask" type="text" name="titleMask" class="form-control" formControlName="titleMask" (change)="makeFilterTitle()">
+            <input id="titleMask" type="text" name="titleMask" class="form-control" formControlName="titleMask" (change)="setSortField()">
           </div>
           <button class="btn btn-primary d-inline block mt-0 ml-2">Confirm title mask</button>
         </div>
 
-        <div class="d-inline-block ml-2" *ngIf="form.get('filterList').value == 'tradedate'">
+        <div class="d-inline-block ml-2">
           <p class="d-inline-block header-title">Date mask</p>
           <div class="d-inline-block ml-2" >
-            <input id="dateMask" type="date" name="dateMask" class="form-control" formControlName="dateMask" (change)="makeFilterData()">
+            <input id="dateMask" type="date" name="dateMask" class="form-control" formControlName="dateMask" (change)="setSortField()">
           </div>
         </div>
 
@@ -69,23 +33,28 @@
 
     </div>
 
-    <div *ngIf="total.length != 0; else noDataBlock">
+    <div *ngIf="(histories | async).length != 0; else noDataBlock">
       <table class="table table-hover mt-2">
         <thead>
         <tr>
-          <th *ngFor="let tableHeader of tableHeaders">{{ tableHeader }}</th>
+          <ng-container *ngFor='let column of columns'>
+            <th (click)='handleSortChange(column)'>
+              {{ column.title }}
+              <i *ngIf='column.name === sortRule?.columnName'
+                 class="fa {{sortRule.direction === sortDirections.Decrease ? 'fa-arrow-down' : 'fa-arrow-up'}}" >
+              </i>
+            </th>
+          </ng-container>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let record of total | paginationPipe: currentPage">
-          <td>{{ record.secid }}</td>
-          <td>{{ record.security.regNumber }}</td>
-          <td>{{ record.security.name }}</td>
-          <td>{{ record.security.emitentTitle }}</td>
-          <td>{{ record.tradedate | date:'dd.MM.yyyy' }}</td>
-          <td>{{ record.numTrades }}</td>
-          <td>{{ record.open }}</td>
-          <td>{{ record.close }}</td>
+        <tr *ngFor="let record of (histories | async)">
+          <ng-container *ngFor='let column of columns'>
+            <ng-container [ngSwitch]='column.formatter'>
+              <td *ngSwitchCase='"date"'>{{ record[column.name] | date : column.extraForFormatter }}</td>
+              <td *ngSwitchDefault>{{ record[column.name] }}</td>
+            </ng-container>
+          </ng-container>
         </tr>
         </tbody>
       </table>
