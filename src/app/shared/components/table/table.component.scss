@@ -1,3 +1,9 @@
+.table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
 .controls {
   display: flex;
   flex-direction: row;

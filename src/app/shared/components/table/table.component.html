@@ -1,34 +1,34 @@
-<table class="table table-hover mt-2">
+<table class='table table-hover mt-2'>
   <thead>
-  <tr>
-    <ng-container *ngFor='let column of columns'>
-      <th (click)='handleSortChange(column)'>
-        {{ column.title }}
-        <i *ngIf='column.name === sortRule?.columnName'
-           class="fa {{sortRule.direction === sortDirections.Decrease ? 'fa-arrow-down' : 'fa-arrow-up'}}" >
-        </i>
-      </th>
+    <tr>
+      <ng-container *ngFor='let column of columns'>
+        <th (click)='handleSortChange(column)'>
+          {{ column.title }}
+          <i *ngIf='column.name === sortRule?.columnName'
+             class="fa {{sortRule.direction === sortDirections.Decrease ? 'fa-arrow-down' : 'fa-arrow-up'}}">
+          </i>
+        </th>
+      </ng-container>
       <th *ngIf='actions.length > 0'></th>
-    </ng-container>
-  </tr>
+    </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let record of data">
-    <ng-container *ngFor='let column of columns'>
-      <ng-container [ngSwitch]='column.formatter'>
-        <td *ngSwitchCase='"date"'>{{ record[column.name] | date : column.extraForFormatter }}</td>
-        <td *ngSwitchDefault>{{ record[column.name] }}</td>
-      </ng-container>
-    </ng-container>
-    <td *ngIf='actions.length > 0'>
-      <div class="controls">
-        <ng-container *ngFor='let action of actions'>
-          <button class="btn {{action.styleClass}}" (click)='handleAction(record.id, action.type)'>
-            <i class="fa fa-lg {{action.icon}}"></i>
-          </button>
+    <tr *ngFor='let record of data'>
+      <ng-container *ngFor='let column of columns'>
+        <ng-container [ngSwitch]='column.formatter'>
+          <td *ngSwitchCase='"date"'>{{ record[column.name] | date : column.extraForFormatter }}</td>
+          <td *ngSwitchDefault>{{ record[column.name] }}</td>
         </ng-container>
-      </div>
-    </td>
-  </tr>
+      </ng-container>
+      <td *ngIf='actions.length > 0'>
+        <div class='controls'>
+          <ng-container *ngFor='let action of actions'>
+            <button class='btn {{action.styleClass}}' (click)='handleAction(record.id, action.type)'>
+              <i class='fa fa-lg {{action.icon}}'></i>
+            </button>
+          </ng-container>
+        </div>
+      </td>
+    </tr>
   </tbody>
 </table>
