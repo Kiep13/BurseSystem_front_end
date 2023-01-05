@@ -62,7 +62,7 @@ export class HttpService {
     return this.http.put<ISecurity>(this.baseUrl + 'security', security);
   }
 
-  public deleteSecurity(id: number): Observable<void> {
+  public deleteSecurity(id: string): Observable<void> {
     return this.http.delete<void>(this.baseUrl + `security/${id}`);
   }
 }

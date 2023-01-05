@@ -16,40 +16,12 @@
   </div>
 
   <div *ngIf='(securities | async).length != 0; else noDataBlock'>
-    <table class='table table-hover table-responsive mt-2'>
-      <thead class='w-100'>
-      <tr>
-        <ng-container *ngFor='let column of columns'>
-          <th>{{ column.title }}</th>
-        </ng-container>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor='let security of (securities | async)'>
-        <ng-container *ngFor='let column of columns'>
-          <ng-container [ngSwitch]='column.formatter'>
-            <td *ngSwitchCase='"boolean"'>{{ security[column.name] | yesNo }}</td>
-            <td *ngSwitchDefault>{{ security[column.name] }}</td>
-          </ng-container>
-        </ng-container>
-
-        <td>
-          <div class='controls'>
-            <button class='btn btn-sm btn-outline-warning float-right my-1 mr-2 item-control d-inline'
-                    [routerLink]="['/', 'securities', 'edit',security.id]">
-              <i class='fa fa-lg fa-pencil'></i>
-            </button>
-
-            <button class='btn btn-sm btn-outline-danger float-right my-1 item-control d-inline'
-                    (click)='delete(security.id)'>
-              <i class='fa fa-lg fa-trash-o'></i>
-            </button>
-          </div>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <app-table [columns]='columns'
+               [actions]='actions'
+               [data]='securities | async'
+               (selected)='handleRecordSelection($event)'
+    >
+    </app-table>
 
     <app-pagination-block [currentPage]='currentPage'
                           [amountPages]='amountPages'

@@ -3,9 +3,10 @@ import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
-import { IColumn, IOptions, IPageContent, ISecurity } from '../../../../shared/interfaces';
+import { IActionInfo, IColumn, IOptions, IPageContent, ISecurity, ITableAction } from '../../../../shared/interfaces';
+import { TableActionTypes } from '../../../../shared/enums';
 import { HttpService } from '../../../../shared/services';
-import { SECURITIES_TABLE_COLUMNS } from '../../constants';
+import { SECURITIES_TABLE_ACTIONS, SECURITIES_TABLE_COLUMNS } from '../../constants';
 
 @Component({
   selector: 'app-securities',
@@ -20,6 +21,7 @@ export class SecuritiesComponent implements OnInit {
   public amountPages: number;
   public currentPage = 1;
 
+  public readonly actions: ITableAction[] = SECURITIES_TABLE_ACTIONS;
   public readonly columns: IColumn[] = SECURITIES_TABLE_COLUMNS;
 
   constructor(private httpService: HttpService,
@@ -35,7 +37,18 @@ export class SecuritiesComponent implements OnInit {
     this.loadSecurities();
   }
 
-  public delete(id: number): void {
+  public handleRecordSelection(actionInfo: IActionInfo): void {
+    switch (actionInfo.type) {
+      case TableActionTypes.Edit: this.navigateToEditPage(actionInfo.id); break;
+      case TableActionTypes.Delete: this.delete(actionInfo.id); break;
+    }
+  }
+
+  private navigateToEditPage(id: string): void {
+    this.router.navigate(['', 'securities', 'edit', id]);
+  }
+
+  private delete(id: string): void {
     this.httpService.deleteSecurity(id)
       .pipe(
         take(1),
