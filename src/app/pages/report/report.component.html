@@ -4,32 +4,22 @@
   </div>
 
   <div>
-
     <div class="ml-4 mr-5 mt-3 header">
-
       <form [formGroup]="form">
-
-        <p class="d-inline-block header-title ml-2">Filter field</p>
-
         <div class="d-inline-block ml-2">
-          <p class="d-inline-block header-title">Title mask</p>
+          <p class="d-inline-block header-title">Title</p>
           <div class="d-inline-block ml-2" >
-            <input id="titleMask" type="text" name="titleMask" class="form-control" formControlName="titleMask" (change)="setSortField()">
-          </div>
-          <button class="btn btn-primary d-inline block mt-0 ml-2">Confirm title mask</button>
-        </div>
-
-        <div class="d-inline-block ml-2">
-          <p class="d-inline-block header-title">Date mask</p>
-          <div class="d-inline-block ml-2" >
-            <input id="dateMask" type="date" name="dateMask" class="form-control" formControlName="dateMask" (change)="setSortField()">
+            <input id="titleMask" type="text" name="titleMask" class="form-control" formControlName="title" (change)="handleChanges()">
           </div>
         </div>
 
         <div class="d-inline-block ml-2">
-          <p></p>
+          <p class="d-inline-block header-title">Date</p>
+          <div class="d-inline-block ml-2" >
+            <input id="dateMask" type="date" name="dateMask" class="form-control" formControlName="date" (change)="handleChanges()">
+          </div>
         </div>
-      </form>
+     </form>
 
     </div>
 

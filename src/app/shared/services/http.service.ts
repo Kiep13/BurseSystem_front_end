@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import queryString from 'query-string';
 import { Injectable } from '@angular/core';
+import queryString from 'query-string';
 import { Observable } from 'rxjs';
 
 import { IHistory, IOptions, IPageContent, ISecurity } from '../interfaces';
@@ -24,20 +24,20 @@ export class HttpService {
     return this.http.get<IHistory>(this.baseUrl + `history/${id}`);
   }
 
-  public uploadHistory(data: FormData): Observable<any> {
-    return this.http.post<any>(this.baseUrl + 'uploadHistory', data);
+  public uploadHistory(data: FormData): Observable<IHistory> {
+    return this.http.post<IHistory>(this.baseUrl + 'history', data);
   }
 
-  public addHistory(history: IHistory): Observable<any> {
-    return this.http.post<any>(this.baseUrl + 'addHistory', history);
+  public addHistory(history: IHistory): Observable<IHistory> {
+    return this.http.post<IHistory>(this.baseUrl + 'history', history);
   }
 
-  public editHistory(history: IHistory): Observable<any> {
-    return this.http.put<any>(this.baseUrl + 'editHistory', history);
+  public editHistory(history: IHistory): Observable<IHistory> {
+    return this.http.put<IHistory>(this.baseUrl + 'history', history);
   }
 
-  public deleteHistory(id: number): Observable<any> {
-    return this.http.delete<any>(this.baseUrl + `deleteHistory/${id}`);
+  public deleteHistory(id: number): Observable<void> {
+    return this.http.delete<void>(this.baseUrl + `history/${id}`);
   }
 
   public getSecurities(options: IOptions): Observable<IPageContent<ISecurity>> {
@@ -50,31 +50,19 @@ export class HttpService {
     return this.http.get<ISecurity>(this.baseUrl + `security/${id}`);
   }
 
-  public uploadSecurity(data: FormData): Observable<any> {
-    return this.http.post(this.baseUrl + 'uploadSecurity', data);
+  public uploadSecurity(data: FormData): Observable<ISecurity> {
+    return this.http.post<ISecurity>(this.baseUrl + 'security', data);
   }
 
-  public addSecurity(security: ISecurity): Observable<any> {
-    return this.http.post<any>(this.baseUrl + 'addSecurity', security);
+  public addSecurity(security: ISecurity): Observable<ISecurity> {
+    return this.http.post<ISecurity>(this.baseUrl + 'security', security);
   }
 
-  public editSecurity(security: ISecurity): Observable<any> {
-    return this.http.put<any>(this.baseUrl + 'editSecurity', security);
+  public editSecurity(security: ISecurity): Observable<ISecurity> {
+    return this.http.put<ISecurity>(this.baseUrl + 'security', security);
   }
 
-  public deleteSecurity(id: number): Observable<any> {
-    return this.http.delete<any>(this.baseUrl + `deleteSecurity/${id}`);
-  }
-
-  public getSortedTotal(options: IOptions): Observable<IHistory[]> {
-    return this.http.post<IHistory[]>(this.baseUrl + 'sortedHistories', options);
-  }
-
-  public getFilteredByDataTotal(options: IOptions): Observable<IHistory[]> {
-    return this.http.post<IHistory[]>(this.baseUrl + 'filteredByDataHistories', options);
-  }
-
-  public getFilteredByTitleTotal(options: IOptions): Observable<IHistory[]> {
-    return this.http.post<IHistory[]>(this.baseUrl + 'filteredByTitleHistories', options);
+  public deleteSecurity(id: number): Observable<void> {
+    return this.http.delete<void>(this.baseUrl + `security/${id}`);
   }
 }

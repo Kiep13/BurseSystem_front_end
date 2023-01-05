@@ -1,13 +1,14 @@
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { catchError, map, take, tap } from 'rxjs/operators';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { IColumn, IHistory, IOptions, IPageContent, ISortRule } from '../../shared/interfaces';
 import { HttpService } from '../../shared/services';
 import { SortDirections } from '../../shared/enums';
 import { REPORT_TABLE_COLUMNS } from './constants';
+import { IForm } from './interfaces';
 
 @Component({
   selector: 'app-report',
@@ -26,9 +27,9 @@ export class ReportComponent implements OnInit {
     direction: SortDirections.Increase
   };
 
-  public form: UntypedFormGroup = new UntypedFormGroup({
-    dateMask: new UntypedFormControl(''),
-    titleMask: new UntypedFormControl('', Validators.required)
+  public form: FormGroup<IForm> = new FormGroup<IForm>({
+    date: new FormControl(new Date()),
+    title: new FormControl('')
   });
 
   public readonly columns: IColumn[] = REPORT_TABLE_COLUMNS;
@@ -59,30 +60,17 @@ export class ReportComponent implements OnInit {
     this.loadData();
   }
 
-  public setSortField(): void {
+  public handleChanges(): void {
     this.loadData();
-  }
-
-  public setFilterType(): void {
-    if (this.form.get('filterList').value === 'no filter') {
-      this.loadData();
-      this.form.get('dateMask').reset();
-      this.form.get('titleMask').reset();
-      return;
-    } else if (this.form.get('filterList').value === 'emitentTitle') {
-      this.form.get('titleMask').reset();
-    } else {
-      this.form.get('dateMask').reset();
-    }
   }
 
   private loadData(): void {
     this.loading.next(true);
 
-    const date = new Date(this.form.get('dateMask').value);
+    const date = new Date(this.form.get('date').value);
     date.setMinutes(date.getTimezoneOffset());
 
-    const filterTitle = this.form.get('titleMask').value;
+    const filterTitle = this.form.get('title').value;
 
     const options: IOptions = {
       sortField: this.sortRule.columnName,
