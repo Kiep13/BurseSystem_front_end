@@ -8,7 +8,8 @@ import {
   NoDataBlockComponent,
   PaginationBlockComponent,
   SmallSpinnerComponent,
-  SpinnerComponent
+  SpinnerComponent,
+  TableComponent
 } from './components';
 import { FileInputValueDirective } from './direcrives';
 import { YesNoPipe } from './pipes';
@@ -19,7 +20,8 @@ const COMPONENTS = [
   NoDataBlockComponent,
   PaginationBlockComponent,
   SmallSpinnerComponent,
-  SpinnerComponent
+  SpinnerComponent,
+  TableComponent
 ];
 
 const DIRECTIVES = [ FileInputValueDirective ];

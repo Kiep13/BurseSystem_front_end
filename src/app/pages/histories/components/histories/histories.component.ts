@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { TableActionTypes } from '../../../../shared/enums';
 
-import { IColumn, IHistory, IOptions, IPageContent } from '../../../../shared/interfaces';
+import { IActionInfo, IColumn, IHistory, IOptions, IPageContent, ITableAction } from '../../../../shared/interfaces';
 import { HttpService } from '../../../../shared/services';
-import { HISTORIES_TABLE_COLUMNS } from '../../constants';
+import { HISTORIES_TABLE_ACTIONS, HISTORIES_TABLE_COLUMNS } from '../../constants';
 
 @Component({
   selector: 'app-histories',
@@ -20,6 +21,7 @@ export class HistoriesComponent implements OnInit {
   public amountPages: number;
   public currentPage = 1;
 
+  public readonly actions: ITableAction[] = HISTORIES_TABLE_ACTIONS;
   public readonly columns: IColumn[] = HISTORIES_TABLE_COLUMNS;
 
   constructor(private httpService: HttpService,
@@ -35,7 +37,18 @@ export class HistoriesComponent implements OnInit {
     this.loadHistories();
   }
 
-  public delete(id: number): void {
+  public handleRecordSelection(actionInfo: IActionInfo): void {
+    switch (actionInfo.type) {
+      case TableActionTypes.Edit: this.navigateToEditPage(actionInfo.id); break;
+      case TableActionTypes.Delete: this.delete(actionInfo.id); break;
+    }
+  }
+
+  private navigateToEditPage(id: string): void {
+    this.router.navigate(['', 'histories', 'edit', id]);
+  }
+
+  private delete(id: string): void {
     this.httpService.deleteHistory(id)
       .pipe(
         take(1),

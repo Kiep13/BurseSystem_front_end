@@ -24,30 +24,11 @@
     </div>
 
     <div *ngIf="(histories | async).length != 0; else noDataBlock">
-      <table class="table table-hover mt-2">
-        <thead>
-        <tr>
-          <ng-container *ngFor='let column of columns'>
-            <th (click)='handleSortChange(column)'>
-              {{ column.title }}
-              <i *ngIf='column.name === sortRule?.columnName'
-                 class="fa {{sortRule.direction === sortDirections.Decrease ? 'fa-arrow-down' : 'fa-arrow-up'}}" >
-              </i>
-            </th>
-          </ng-container>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let record of (histories | async)">
-          <ng-container *ngFor='let column of columns'>
-            <ng-container [ngSwitch]='column.formatter'>
-              <td *ngSwitchCase='"date"'>{{ record[column.name] | date : column.extraForFormatter }}</td>
-              <td *ngSwitchDefault>{{ record[column.name] }}</td>
-            </ng-container>
-          </ng-container>
-        </tr>
-        </tbody>
-      </table>
+      <app-table [columns]='columns'
+                 [sortRule]='sortRule'
+                 [data]='histories | async'
+                 (sorted)='handleSortChange($event)'>
+      </app-table>
 
       <app-pagination-block [currentPage]="currentPage"
                             [amountPages]="amountPages"

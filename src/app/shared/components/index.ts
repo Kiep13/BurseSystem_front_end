@@ -4,3 +4,4 @@ export * from './no-data-block/no-data-block.component';
 export * from './pagination-block/pagination-block.component';
 export * from './small-spinner/small-spinner.component';
 export * from './spinner/spinner.component';
+export * from './table/table.component';

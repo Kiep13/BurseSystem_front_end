@@ -36,7 +36,7 @@ export class HttpService {
     return this.http.put<IHistory>(this.baseUrl + 'history', history);
   }
 
-  public deleteHistory(id: number): Observable<void> {
+  public deleteHistory(id: string): Observable<void> {
     return this.http.delete<void>(this.baseUrl + `history/${id}`);
   }
 
