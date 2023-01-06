@@ -24,7 +24,7 @@ export interface IHistory {
   waVal: number;
   security?: ISecurity;
 
-  regNumber__security_c: string;
-  name__security_c: string;
-  emitentTitle__security_c: string;
+  regNumber__security_c?: string;
+  name__security_c?: string;
+  emitentTitle__security_c?: string;
 }

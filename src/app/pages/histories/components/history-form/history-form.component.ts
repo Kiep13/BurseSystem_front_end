@@ -1,5 +1,5 @@
-import { FormControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
@@ -14,6 +14,7 @@ import {
   ERROR_UPDATE_HISTORY_MESSAGE,
   SUCCESS_ADD_HISTORY_MESSAGE, SUCCESS_UPDATE_HISTORY_MESSAGE
 } from '../../constants';
+import { IHistoryForm } from '../../interfaces';
 
 @Component({
   selector: 'app-history-form',
@@ -22,43 +23,27 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HistoryFormComponent implements OnInit {
-  public form: UntypedFormGroup = new UntypedFormGroup({
-    boardid: new UntypedFormControl('', [Validators.required]),
+  public form: FormGroup<IHistoryForm> = new FormGroup<IHistoryForm>({
+    boardid: new FormControl('', [Validators.required]),
     tradedate: new FormControl<Date>(new Date(), [Validators.required]),
-    shortName: new UntypedFormControl('', [Validators.required]),
-    secid: new UntypedFormControl('', [Validators.required]),
-    numTrades: new UntypedFormControl('',
-      [FormValidators.negativeNumber]),
-    value: new UntypedFormControl('',
-      [FormValidators.negativeNumber]),
-    open: new UntypedFormControl('',
-      [FormValidators.negativeNumber]),
-    low: new UntypedFormControl('',
-      [FormValidators.negativeNumber]),
-    high: new UntypedFormControl('',
-      [FormValidators.negativeNumber]),
-    legalClosePrice: new UntypedFormControl('',
-      [FormValidators.negativeNumber]),
-    waprice: new UntypedFormControl('',
-      [FormValidators.negativeNumber]),
-    close: new UntypedFormControl('',
-      [FormValidators.negativeNumber]),
-    volume: new UntypedFormControl('',
-      [FormValidators.negativeNumber]),
-    marketPrice2: new UntypedFormControl('',
-      [FormValidators.negativeNumber]),
-    marketPrice3: new UntypedFormControl('',
-      [FormValidators.negativeNumber]),
-    admittedQuite: new UntypedFormControl('',
-      [FormValidators.negativeNumber]),
-    mp2ValTrd: new UntypedFormControl('',
-      [FormValidators.negativeNumber]),
-    marketPrice3TradeValue: new UntypedFormControl('',
-      [FormValidators.negativeNumber]),
-    admittedValue: new UntypedFormControl('',
-      [FormValidators.negativeNumber]),
-    waVal: new UntypedFormControl('',
-      [FormValidators.negativeNumber])
+    shortName: new FormControl('', [Validators.required]),
+    secid: new FormControl('', [Validators.required]),
+    numTrades: new FormControl(0, [FormValidators.negativeNumber]),
+    value: new FormControl(0, [FormValidators.negativeNumber]),
+    open: new FormControl(0, [FormValidators.negativeNumber]),
+    low: new FormControl(0, [FormValidators.negativeNumber]),
+    high: new FormControl(0, [FormValidators.negativeNumber]),
+    legalClosePrice: new FormControl(0, [FormValidators.negativeNumber]),
+    waprice: new FormControl(0, [FormValidators.negativeNumber]),
+    close: new FormControl(0, [FormValidators.negativeNumber]),
+    volume: new FormControl(0, [FormValidators.negativeNumber]),
+    marketPrice2: new FormControl(0, [FormValidators.negativeNumber]),
+    marketPrice3: new FormControl(0, [FormValidators.negativeNumber]),
+    admittedQuite: new FormControl(0, [FormValidators.negativeNumber]),
+    mp2ValTrd: new FormControl(0, [FormValidators.negativeNumber]),
+    marketPrice3TradeValue: new FormControl(0, [FormValidators.negativeNumber]),
+    admittedValue: new FormControl(0, [FormValidators.negativeNumber]),
+    waVal: new FormControl(0, [FormValidators.negativeNumber])
   });
 
   public isEditMode = false;
@@ -138,7 +123,7 @@ export class HistoryFormComponent implements OnInit {
           this.form.patchValue(history);
 
           const tradeDate = new Date(history.tradedate);
-          this.form.get('tradedate').setValue(`${tradeDate.getFullYear()}-${tradeDate.getMonth()}-${tradeDate.getDate()}`);
+          this.form.get('tradedate').setValue(tradeDate);
 
           this.loading.next(false);
         }),

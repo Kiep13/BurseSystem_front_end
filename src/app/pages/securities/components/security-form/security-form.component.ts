@@ -1,12 +1,12 @@
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
-import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { AlertService, HttpService } from '../../../../shared/services';
 import { FormValidators } from '../../../../shared/validators';
-import { IHistory, ISecurity } from '../../../../shared/interfaces';
+import { ISecurity } from '../../../../shared/interfaces';
 import {
   ERROR_CREATE_SECURITY_MESSAGE,
   ERROR_UPDATE_SECURITY_MESSAGE,
@@ -15,6 +15,7 @@ import {
   SUCCESS_ADD_SECURITY_MESSAGE,
   SUCCESS_UPDATE_SECURITY_MESSAGE
 } from '../../constants';
+import { ISecurityForm } from '../../interfaces';
 
 @Component({
   selector: 'app-security-form',
@@ -23,22 +24,22 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SecurityFormComponent implements OnInit {
-  public form: UntypedFormGroup = new UntypedFormGroup({
-    secid: new UntypedFormControl('', [Validators.required]),
-    shortName: new UntypedFormControl('', [Validators.required]),
-    regNumber: new UntypedFormControl('', [Validators.required]),
-    name: new UntypedFormControl('', [Validators.required, FormValidators.securityName]),
-    isIn: new UntypedFormControl('', [Validators.required]),
-    isTraded: new UntypedFormControl(''), // boolean
-    emitentId: new UntypedFormControl('', [Validators.required, FormValidators.negativeNumber]),
-    emitentTitle: new UntypedFormControl('', [Validators.required]),
-    emitentInn: new UntypedFormControl('', [Validators.required]),
-    emitentOkpo: new UntypedFormControl('', [Validators.required]),
-    gosReg: new UntypedFormControl('', [Validators.required]),
-    type: new UntypedFormControl('', [Validators.required]),
-    group_: new UntypedFormControl('', [Validators.required]),
-    primaryBoarDid: new UntypedFormControl('', [Validators.required]),
-    marketPriceBoarDid: new UntypedFormControl('', [Validators.required])
+  public form: FormGroup<ISecurityForm> = new FormGroup<ISecurityForm>({
+    secid: new FormControl('', [Validators.required]),
+    shortName: new FormControl('', [Validators.required]),
+    regNumber: new FormControl('', [Validators.required]),
+    name: new FormControl('', [Validators.required, FormValidators.securityName]),
+    isIn: new FormControl('', [Validators.required]),
+    isTraded: new FormControl(false),
+    emitentId: new FormControl(0, [Validators.required, FormValidators.negativeNumber]),
+    emitentTitle: new FormControl('', [Validators.required]),
+    emitentInn: new FormControl('', [Validators.required]),
+    emitentOkpo: new FormControl('', [Validators.required]),
+    gosReg: new FormControl('', [Validators.required]),
+    type: new FormControl('', [Validators.required]),
+    group_: new FormControl('', [Validators.required]),
+    primaryBoarDid: new FormControl('', [Validators.required]),
+    marketPriceBoarDid: new FormControl('', [Validators.required])
   });
 
   public isEditMode = false;
@@ -82,7 +83,8 @@ export class SecurityFormComponent implements OnInit {
 
     const security: ISecurity = {
       ...(this.isEditMode ? this.editedSecurity : {}),
-      ...this.form.getRawValue()
+      ...this.form.getRawValue(),
+      traded: this.form.get('isTraded').value
     };
 
     this.getActionForSubmit()(security)
@@ -109,7 +111,10 @@ export class SecurityFormComponent implements OnInit {
         take(1),
         tap((security: ISecurity) => {
           this.editedSecurity = security;
-          this.form.patchValue(security);
+          this.form.patchValue({
+            ...security,
+            isTraded: security.traded
+          });
 
           this.loading.next(false);
         }),
